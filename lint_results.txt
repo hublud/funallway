@@ -1,0 +1,37 @@
+[0m[0m
+[0m[4mC:\Users\HUBLUD TECHNOLOGY\Desktop\funalltheway\src\app\admin\page.tsx[24m[0m
+[0m   [2m10:3[22m    [33mwarning[39m  'MoreVertical' is defined but never used            [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m22:3[22m    [33mwarning[39m  'DollarSign' is defined but never used              [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m   [2m88:9[22m    [33mwarning[39m  'handleApprove' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m151:9[22m    [33mwarning[39m  'handleReject' is assigned a value but never used   [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m670:90[22m   [31merror[39m    Unexpected any. Specify a different type            [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m  [2m932:129[22m  [31merror[39m    Unexpected any. Specify a different type            [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\HUBLUD TECHNOLOGY\Desktop\funalltheway\src\app\auth\register\page.tsx[24m[0m
+[0m    [2m5:17[22m   [33mwarning[39m  'ChevronRight' is defined but never used                         [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m181:134[22m  [31merror[39m    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m410:102[22m  [31merror[39m    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m410:104[22m  [31merror[39m    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\HUBLUD TECHNOLOGY\Desktop\funalltheway\src\app\dashboard\page.tsx[24m[0m
+[0m   [2m78:16[22m  [33mwarning[39m  'setPlan' is assigned a value but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m181:92[22m  [31merror[39m    Unexpected any. Specify a different type      [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\HUBLUD TECHNOLOGY\Desktop\funalltheway\src\app\page.tsx[24m[0m
+[0m    [2m6:37[22m  [33mwarning[39m  'Sparkles' is defined but never used      [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m210:56[22m  [31merror[39m    Unexpected any. Specify a different type  [2m@typescript-eslint/no-explicit-any[22m[0m
+[0m[0m
+[0m[4mC:\Users\HUBLUD TECHNOLOGY\Desktop\funalltheway\src\app\profile\[id]\page.tsx[24m[0m
+[0m  [2m3:31[22m  [33mwarning[39m  'Sparkles' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[4mC:\Users\HUBLUD TECHNOLOGY\Desktop\funalltheway\src\app\terms\page.tsx[24m[0m
+[0m   [2m2:39[22m   [33mwarning[39m  'Lock' is defined but never used                                 [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m  [2m58:136[22m  [31merror[39m    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m75:28[22m   [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m75:41[22m   [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\HUBLUD TECHNOLOGY\Desktop\funalltheway\src\components\Navbar.tsx[24m[0m
+[0m  [2m3:59[22m  [33mwarning[39m  'Shield' is defined but never used  [2m@typescript-eslint/no-unused-vars[22m[0m
+[0m[0m
+[0m[31m[1m✖ 20 problems (10 errors, 10 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

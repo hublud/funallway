@@ -1,0 +1,43 @@
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhatsAppSupport from "@/components/WhatsAppSupport";
+import Script from "next/script";
+import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "funallway",
+  description: "Browse and connect directly on funallway",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#ffffff",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className={`${inter.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans">
+        <Script src="https://js.paystack.co/v1/inline.js" strategy="beforeInteractive" />
+        <Navbar />
+        <main className="flex-1 flex flex-col pb-16 sm:pb-0">{children}</main>
+        <Footer />
+        <WhatsAppSupport />
+      </body>
+    </html>
+  );
+}
