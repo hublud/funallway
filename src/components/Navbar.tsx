@@ -26,41 +26,45 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-white/20 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center gap-2 group">
-              <Image 
-                src="/logo.png" 
-                alt="Logo" 
-                width={40}
-                height={40}
-                priority
-                className="w-10 h-10 object-contain group-hover:scale-105 transition-transform duration-300"
-              />
-              <span className="font-bold sm:text-xl text-lg tracking-tight text-slate-900 group-hover:text-blue-600 transition">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative">
+                <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600 to-blue-400 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <Image 
+                  src="/logo.png" 
+                  alt="Logo" 
+                  width={38}
+                  height={38}
+                  priority
+                  className="relative w-9 h-9 object-contain"
+                />
+              </div>
+              <span className="font-display font-black text-xl tracking-tight text-slate-900">
                 funall<span className="text-blue-600">way</span>
               </span>
             </Link>
-            <div className="hidden sm:flex items-center gap-4">
-              <button className="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition">
+            <div className="hidden sm:flex items-center gap-2">
+              <button className="p-2.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-xl transition-all duration-300">
                 <Search className="w-5 h-5" />
               </button>
+              <div className="w-px h-6 bg-slate-200 mx-2"></div>
               {isLoggedIn ? (
                 <Link 
                   href="/dashboard"
-                  className="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition"
-                  title="My Account"
+                  className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-slate-700 hover:text-blue-600 bg-slate-50 hover:bg-blue-50/50 rounded-xl border border-slate-200 hover:border-blue-100 transition-all duration-300"
                 >
-                  <User className="w-5 h-5" />
+                  <LayoutDashboard className="w-4 h-4" />
+                  Dashboard
                 </Link>
               ) : (
                 <Link 
                   href="/auth"
-                  className="p-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition"
-                  title="Login"
+                  className="flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-lg shadow-blue-200/50 hover:shadow-blue-300/50 transition-all duration-300 active:scale-[0.98]"
                 >
-                  <User className="w-5 h-5" />
+                  <User className="w-4 h-4" />
+                  Sign In
                 </Link>
               )}
             </div>
