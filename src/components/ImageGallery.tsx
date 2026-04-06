@@ -25,8 +25,8 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
 
   return (
     <div className="flex flex-col gap-4 w-full">
-      {/* Main Image Stage */}
-      <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-100 shadow-md border border-slate-100 group">
+      {/* Main Image Stage - Reduced by 30% on mobile (w-full to w-[70%]) for better scroll experience */}
+      <div className="relative aspect-[3/4] w-[70%] mx-auto sm:w-full rounded-2xl overflow-hidden bg-slate-100 shadow-md border border-slate-100 group">
         <Image 
           src={images[selectedIndex]}
           alt={`${altPrefix} - Image ${selectedIndex + 1}`}

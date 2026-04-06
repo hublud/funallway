@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Profile } from "@/lib/mockData";
 import ProfileCard from "@/components/ProfileCard";
 import { Filter, Search, X, MapPin, Sparkles, ChevronDown, Check, Globe, Map as MapIcon, Loader2 } from "lucide-react";
@@ -115,6 +116,15 @@ export default function Home() {
             <p className="text-slate-500 mt-2 text-lg font-medium">
               Find verified models by location & travel preferences.
             </p>
+            <div className="mt-4">
+              <Link 
+                href="/auth" 
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-black px-6 py-3 rounded-2xl text-sm uppercase tracking-widest transition-all shadow-lg shadow-blue-200 active:scale-95"
+              >
+                <Sparkles className="w-4 h-4" />
+                Register as a model
+              </Link>
+            </div>
           </div>
         </div>
 
