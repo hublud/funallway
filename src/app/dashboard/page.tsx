@@ -473,32 +473,32 @@ function DashboardContent() {
                <p className="text-sm text-slate-500 border-b border-slate-100 pb-4 mb-6">Manage your service pricing for both incall and outcall.</p>
                
                <div className="space-y-6">
-                 <div className="grid grid-cols-3 gap-4 mb-2 px-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                 <div className="hidden sm:grid grid-cols-3 gap-4 mb-2 px-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                    <div className="col-span-1">Service</div>
                    <div className="text-center">Incall (₦)</div>
                    <div className="text-center">Outcall (₦)</div>
                  </div>
                  
                  {formData.rates.map((rate, idx) => (
-                   <div key={rate.service} className="grid grid-cols-3 gap-4 items-center bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                     <div className="font-bold text-slate-700 text-sm">{rate.service}</div>
+                   <div key={rate.service} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                     <div className="font-bold text-slate-700 text-sm sm:text-base border-b sm:border-0 border-slate-200 pb-2 sm:pb-0">{rate.service}</div>
                      <div className="relative">
-                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">₦</span>
+                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs uppercase">In</span>
                        <input 
                          type="number" 
                          value={rate.incall || ""}
                          onChange={(e) => handleRateChange(idx, "incall", e.target.value)}
-                         className="w-full bg-white border border-slate-200 rounded-xl pl-7 pr-3 py-2.5 text-sm font-bold text-slate-700 focus:ring-2 focus:ring-blue-600 outline-none transition"
+                         className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-base font-bold text-slate-700 focus:ring-2 focus:ring-blue-600 outline-none transition"
                          placeholder="0"
                        />
                      </div>
                      <div className="relative">
-                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">₦</span>
+                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs uppercase">Out</span>
                        <input 
                          type="number" 
                          value={rate.outcall || ""}
                          onChange={(e) => handleRateChange(idx, "outcall", e.target.value)}
-                         className="w-full bg-white border border-slate-200 rounded-xl pl-7 pr-3 py-2.5 text-sm font-bold text-slate-700 focus:ring-2 focus:ring-blue-600 outline-none transition"
+                         className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-base font-bold text-slate-700 focus:ring-2 focus:ring-blue-600 outline-none transition"
                          placeholder="0"
                        />
                      </div>

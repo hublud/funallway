@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { NIGERIAN_STATES } from "@/lib/states";
-import { Check, ChevronRight, UploadCloud, MapPin, Map, Image as ImageIcon, CreditCard, X, Search, Sparkles } from "lucide-react";
+import { Check, ChevronRight, UploadCloud, MapPin, Map, Image as ImageIcon, CreditCard, X, Search, Sparkles, Eye, EyeOff } from "lucide-react";
 import { INTERESTS_LIST } from "@/lib/mockData";
 import { getPlatformSettings, type PlatformSettings, DEFAULT_SETTINGS } from "@/utils/pricing";
 import Link from "next/link";
@@ -15,6 +15,7 @@ export default function RegisterWizard() {
   const router = useRouter();
   const supabase = createClient();
   const [step, setStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
   const [platformSettings, setPlatformSettings] = useState<PlatformSettings>(DEFAULT_SETTINGS);
 
   useEffect(() => {
@@ -280,12 +281,21 @@ export default function RegisterWizard() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Password</label>
-                  <input 
-                    type="password" 
-                    value={formData.password}
-                    onChange={(e) => setFormData({...formData, password: e.target.value})}
-                    className="w-full border border-slate-300 rounded-xl px-4 py-3.5 text-base focus:ring-2 focus:ring-blue-600 outline-none transition" 
-                  />
+                  <div className="relative">
+                    <input 
+                      type={showPassword ? "text" : "password"} 
+                      value={formData.password}
+                      onChange={(e) => setFormData({...formData, password: e.target.value})}
+                      className="w-full border border-slate-300 rounded-xl px-4 py-3.5 text-base focus:ring-2 focus:ring-blue-600 outline-none transition" 
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
+                    >
+                      {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    </button>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Where are you based?</label>
@@ -577,32 +587,32 @@ export default function RegisterWizard() {
               <p className="text-slate-500 mb-8">Set your pricing for different service types. Enter '0' if a service is not offered.</p>
               
               <div className="space-y-6">
-                <div className="grid grid-cols-3 gap-4 mb-2 px-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                <div className="hidden sm:grid grid-cols-3 gap-4 mb-2 px-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                   <div className="col-span-1">Service</div>
                   <div className="text-center">Incall</div>
                   <div className="text-center">Outcall</div>
                 </div>
                 
                 {formData.rates.map((rate, idx) => (
-                  <div key={rate.service} className="grid grid-cols-3 gap-4 items-center bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <div className="font-bold text-slate-700 text-sm">{rate.service}</div>
+                  <div key={rate.service} className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <div className="font-bold text-slate-700 text-sm sm:text-base border-b sm:border-0 border-slate-200 pb-2 sm:pb-0">{rate.service}</div>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">₦</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs uppercase">In</span>
                       <input 
                         type="number" 
                         value={rate.incall || ""}
                         onChange={(e) => handleRateChange(idx, "incall", e.target.value)}
-                        className="w-full bg-white border border-slate-200 rounded-xl pl-7 pr-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-600 outline-none transition"
+                        className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-base font-bold text-slate-700 focus:ring-2 focus:ring-blue-600 outline-none transition"
                         placeholder="0"
                       />
                     </div>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">₦</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs uppercase">Out</span>
                       <input 
                         type="number" 
                         value={rate.outcall || ""}
                         onChange={(e) => handleRateChange(idx, "outcall", e.target.value)}
-                        className="w-full bg-white border border-slate-200 rounded-xl pl-7 pr-3 py-2.5 text-sm focus:ring-2 focus:ring-blue-600 outline-none transition"
+                        className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-base font-bold text-slate-700 focus:ring-2 focus:ring-blue-600 outline-none transition"
                         placeholder="0"
                       />
                     </div>

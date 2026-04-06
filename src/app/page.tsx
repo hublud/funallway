@@ -94,7 +94,7 @@ export default function Home() {
 
     // Default return is sequential order (oldest to newest mock data placement)
     return [{
-      title: selectedStates.length > 0 ? "Search Results" : "All Models",
+      title: selectedStates.length > 0 ? "Search Results" : "All Escorts",
       subtitle: selectedStates.join(", "),
       profiles: filtered
     }];
@@ -303,7 +303,7 @@ export default function Home() {
                   <div className="text-slate-400 text-xs font-black uppercase tracking-widest">{section.profiles.length} Results</div>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-8">
+                <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-8">
                   {section.profiles.map((profile) => (
                     <ProfileCard key={`${section.title}-${profile.id}`} profile={profile} />
                   ))}
