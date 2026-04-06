@@ -11,14 +11,12 @@ export default function Footer() {
             © {currentYear} funallway. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm">
-            <a 
-              href="https://wa.me/2347038473900?text=Hello%20Admin%2C%20I%20have%20an%20enquiry/complaint%20regarding%20Fun%20All%20The%20Way."
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link 
+              href="/contact"
               className="px-4 py-1.5 bg-slate-900 hover:bg-black text-white rounded-lg text-xs font-black uppercase tracking-widest transition shadow-sm inline-flex items-center gap-2"
             >
-              Enquiry / Complaints
-            </a>
+              Contact Support
+            </Link>
             <Link href="/privacy" className="text-slate-500 hover:text-blue-600 transition tracking-tight">
               Privacy Policy
             </Link>

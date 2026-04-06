@@ -46,6 +46,12 @@ export default function Navbar() {
               </span>
             </Link>
             <div className="hidden sm:flex items-center gap-2">
+              <Link 
+                href="/contact"
+                className="px-4 py-2 text-sm font-bold text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-xl transition-all duration-300"
+              >
+                Contact
+              </Link>
               <button className="p-2.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50/50 rounded-xl transition-all duration-300">
                 <Search className="w-5 h-5" />
               </button>

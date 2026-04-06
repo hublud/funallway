@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Outfit } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import WhatsAppSupport from "@/components/WhatsAppSupport";
 import Script from "next/script";
 import "./globals.css";
 
@@ -41,7 +40,6 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1 flex flex-col pb-16 sm:pb-0">{children}</main>
         <Footer />
-        <WhatsAppSupport />
       </body>
     </html>
   );
