@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { User, Image as ImageIcon, CreditCard, Save, Map, Search, X, UploadCloud, Shield, Calendar, Sparkles, Loader2, LogOut } from "lucide-react";
 import { INTERESTS_LIST } from "@/lib/mockData";
@@ -11,7 +11,10 @@ import { getPlatformSettings, type PlatformSettings, DEFAULT_SETTINGS } from "@/
 
 type Tab = "profile" | "services" | "rates" | "media" | "security" | "subscription";
 
-export default function Dashboard() {
+// Force dynamic rendering to prevent static pre-rendering errors with user sessions
+export const dynamic = 'force-dynamic';
+
+function DashboardContent() {
   const [activeTab, setActiveTab] = useState<Tab>("profile");
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -714,5 +717,18 @@ export default function Dashboard() {
       </div>
       )}
     </div>
+  );
+}
+
+export default function Dashboard() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col items-center justify-center min-h-screen py-32 text-center text-blue-600">
+        <Loader2 className="w-12 h-12 animate-spin mb-4" />
+        <p className="font-bold">Preparing your dashboard...</p>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
   );
 }
