@@ -148,8 +148,8 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
         </div>
       </div>
 
-      {/* Sticky Mobile CTA - Offset by Mobile Bottom Navbar (16 units) */}
-      <div className="sm:hidden fixed bottom-16 inset-x-0 bg-white/95 backdrop-blur-md p-4 border-t border-slate-100 z-40 shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)]">
+      {/* Sticky Mobile CTA - Offset by Mobile Bottom Navbar (16 units + safe area) */}
+      <div className="sm:hidden fixed bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] inset-x-0 bg-white/95 backdrop-blur-md p-4 border-t border-slate-100 z-[60] shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)]">
         <ProfileClientActions profile={profile} />
       </div>
     </div>

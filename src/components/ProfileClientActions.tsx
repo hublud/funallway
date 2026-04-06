@@ -12,7 +12,7 @@ export default function ProfileClientActions({ profile }: { profile: Profile }) 
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 text-lg transform hover:-translate-y-1"
+        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 active:scale-[0.98] active:opacity-90 text-white font-black py-4 px-8 rounded-2xl transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-3 text-lg transform hover:-translate-y-1"
       >
         <MessageCircle className="w-5 h-5" />
         Connect Now
