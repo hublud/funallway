@@ -213,7 +213,7 @@ export default function RegisterWizard() {
                 <MapPin className="w-6 h-6" />
               </div>
               <h2 className="text-2xl font-bold text-slate-900 mb-2">Core Details</h2>
-              <p className="text-slate-500 mb-8">Set up your model identity and base location.</p>
+              <p className="text-slate-500 mb-8">Set up your escort identity and base location.</p>
               
               <div className="space-y-5">
                 <div>

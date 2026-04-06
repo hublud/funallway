@@ -114,15 +114,15 @@ export default function Home() {
         <div className="relative max-w-5xl mx-auto text-center space-y-8 animate-in fade-in slide-in-from-top-8 duration-1000">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-black uppercase tracking-widest shadow-sm">
             <Sparkles className="w-3.5 h-3.5" />
-            Premium Model Discovery
+            Premium Escort Discovery
           </div>
           
           <h1 className="text-5xl sm:text-7xl font-display font-black tracking-tight text-slate-900 leading-[1.1]">
-            Connect with <span className="text-gradient">Elite Models</span> <br className="hidden sm:block" /> Across the Globe
+            Connect with <span className="text-gradient">Elite Escorts</span> <br className="hidden sm:block" /> Across the Globe
           </h1>
           
           <p className="max-w-2xl mx-auto text-lg sm:text-xl text-slate-500 font-medium leading-relaxed">
-            Discover verified models by location, style, and travel preferences. Join the most exclusive marketplace today.
+            Discover verified escorts by location, style, and travel preferences. Join the most exclusive marketplace today.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
@@ -130,7 +130,7 @@ export default function Home() {
               href="/auth" 
               className="px-8 py-4 bg-navy text-white font-display font-black rounded-2xl shadow-2xl shadow-navy/20 hover:scale-[1.02] transition-all duration-300 active:scale-95 uppercase tracking-widest text-sm"
             >
-              Register as a model
+              Register as an escort
             </Link>
             <button 
               onClick={() => document.getElementById('search-section')?.scrollIntoView({ behavior: 'smooth' })}
@@ -286,7 +286,7 @@ export default function Home() {
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-32 text-center text-blue-600">
               <Loader2 className="w-12 h-12 animate-spin mb-4" />
-              <p className="font-display font-bold uppercase tracking-widest">Curating Models...</p>
+              <p className="font-display font-bold uppercase tracking-widest">Curating Escorts...</p>
             </div>
           ) : totalResults > 0 ? (
             sections.map((section, idx) => (

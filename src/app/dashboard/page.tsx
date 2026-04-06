@@ -211,7 +211,7 @@ function DashboardContent() {
 
   return (
     <div className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-10">
-      <h1 className="text-3xl font-extrabold text-slate-900 mb-8">Model Settings</h1>
+      <h1 className="text-3xl font-extrabold text-slate-900 mb-8">Escort Settings</h1>
 
       {/* Payment Success Banner */}
       {paymentSuccess && (

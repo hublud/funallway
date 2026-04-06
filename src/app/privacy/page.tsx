@@ -33,12 +33,12 @@ export default function PrivacyPage() {
             </h2>
             <div className="pl-11 space-y-4 text-slate-600 leading-relaxed">
               <p>
-                To provide our services as a connection platform, we collect specific information from both models and users:
+                To provide our services as a connection platform, we collect specific information from both escorts and users:
               </p>
               <ul className="list-disc space-y-2 pl-4 marker:text-blue-500">
-                <li><span className="font-bold text-slate-900">Model Identity:</span> Full names, ages, and profile media (photos/videos).</li>
-                <li><span className="font-bold text-slate-900">Location Data:</span> We record the state and city models operate in to facilitate location-based search.</li>
-                <li><span className="font-bold text-slate-900">Contact Details:</span> WhatsApp numbers are stored securely to allow connections between users and models.</li>
+                <li><span className="font-bold text-slate-900">Escort Identity:</span> Full names, ages, and profile media (photos/videos).</li>
+                <li><span className="font-bold text-slate-900">Location Data:</span> We record the state and city escorts operate in to facilitate location-based search.</li>
+                <li><span className="font-bold text-slate-900">Contact Details:</span> WhatsApp numbers are stored securely to allow connections between users and escorts.</li>
                 <li><span className="font-bold text-slate-900">Technical Data:</span> IP addresses and browser types for security and fraud prevention.</li>
               </ul>
             </div>
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
               <ul className="list-disc space-y-2 pl-4 marker:text-blue-500">
                 <li>To maintain your public profile on our discovery board.</li>
                 <li>To process subscription payments and connection fees.</li>
-                <li>To enable registered users to access model contact information via connection payments.</li>
+                <li>To enable registered users to access escort contact information via connection payments.</li>
                 <li>To improve platform security and prevent account impersonation.</li>
               </ul>
             </div>

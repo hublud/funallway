@@ -36,8 +36,8 @@ export default function TermsPage() {
                 By using funallway, you represent and warrant that you are at least <span className="font-bold text-slate-900 underline decoration-blue-500 decoration-2">18 years of age</span>.
               </p>
               <ul className="list-disc space-y-2 pl-4 marker:text-blue-500">
-                <li><span className="font-bold text-slate-900">Registered Models:</span> Must provide accurate personal detail and current profile images.</li>
-                <li><span className="font-bold text-slate-900">Site Users:</span> Use of the platform is strictly for the purpose of connecting with models. Any and all offline interactions are entirely at the personal risk and responsibility of the users involved.</li>
+                <li><span className="font-bold text-slate-900">Registered Escorts:</span> Must provide accurate personal detail and current profile images.</li>
+                <li><span className="font-bold text-slate-900">Site Users:</span> Use of the platform is strictly for the purpose of connecting with escorts. Any and all offline interactions are entirely at the personal risk and responsibility of the users involved.</li>
                 <li><span className="font-bold text-slate-900">Misuse:</span> Automated scraping, account impersonation, and unauthorized commercial use are strictly prohibited.</li>
               </ul>
             </div>
@@ -54,8 +54,8 @@ export default function TermsPage() {
                 As a connection platform, funallway operates on a paid access model:
               </p>
               <ul className="list-disc space-y-2 pl-4 marker:text-blue-500">
-                <li><span className="font-bold text-slate-900 font-sans">Model Subscriptions:</span> Weekly or Monthly plans give models visibility on the discovery board. Fees are for access to the platform services.</li>
-                <li><span className="font-bold text-slate-900">User Connection Fees:</span> Small, one-time fees paid to access a model&apos;s WhatsApp contact information. This fee represents the connection service provided by the platform.</li>
+                <li><span className="font-bold text-slate-900 font-sans">Escort Subscriptions:</span> Weekly or Monthly plans give escorts visibility on the discovery board. Fees are for access to the platform services.</li>
+                <li><span className="font-bold text-slate-900">User Connection Fees:</span> Small, one-time fees paid to access an escort&apos;s WhatsApp contact information. This fee represents the connection service provided by the platform.</li>
                 <li><span className="font-bold text-slate-900 italic">No Refunds:</span> All digital sales are final. We do not provide refunds once a subscription is active or a contact has been unlocked.</li>
               </ul>
             </div>
@@ -65,14 +65,14 @@ export default function TermsPage() {
           <section className="space-y-4 font-sans">
             <h2 className="text-2xl font-black text-slate-900 flex items-center gap-3">
               <span className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">03</span>
-              Independence of Models
+              Independence of Escorts
             </h2>
             <div className="pl-11 space-y-4 text-slate-600 leading-relaxed">
               <p>
-                funallway is a pure connection platform. Models are independent service providers and <span className="underline decoration-red-500 decoration-2 font-bold text-slate-900 uppercase italic">NOT employees, agents, or partners</span> of this platform.
+                funallway is a pure connection platform. Escorts are independent service providers and <span className="underline decoration-red-500 decoration-2 font-bold text-slate-900 uppercase italic">NOT employees, agents, or partners</span> of this platform.
               </p>
               <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100 text-sm font-medium leading-relaxed italic text-slate-700">
-                Important: &quot;The Platform&quot; does not background-check users. Both models and users are strongly advised to prioritize personal safety and meeting in public spaces for initial connections.
+                Important: &quot;The Platform&quot; does not background-check users. Both escorts and users are strongly advised to prioritize personal safety and meeting in public spaces for initial connections.
               </div>
             </div>
           </section>
@@ -86,7 +86,7 @@ export default function TermsPage() {
             <div className="pl-11 space-y-4 text-slate-600 leading-relaxed font-sans">
               <p>The platform reserves the right to suspend or ban account without notice if any of the following occur:</p>
               <ul className="list-decimal space-y-2 pl-4 marker:text-slate-900 font-bold">
-                <li>Harassment, threats, or abuse directed at other users or models.</li>
+                <li>Harassment, threats, or abuse directed at other users or escorts.</li>
                 <li>Misuse of contact information (WhatsApp numbers) for spam or resale.</li>
                 <li>Sharing illegal content or promoting illegal activities via the platform.</li>
               </ul>

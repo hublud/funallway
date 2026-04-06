@@ -69,7 +69,7 @@ export default function AuthHub() {
             <LogIn className="w-6 h-6" />
           </div>
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Welcome Back</h2>
-          <p className="text-slate-500 mb-8">Sign in to your model dashboard.</p>
+          <p className="text-slate-500 mb-8">Sign in to your escort dashboard.</p>
 
           <form onSubmit={handleLogin} className="space-y-5">
             {error && (
@@ -136,7 +136,7 @@ export default function AuthHub() {
             <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center text-white mb-6">
               <UserPlus className="w-6 h-6" />
             </div>
-            <h2 className="text-2xl font-bold mb-2">Create Model Profile</h2>
+            <h2 className="text-2xl font-bold mb-2">Create Escort Profile</h2>
             <p className="text-blue-100 mb-6">Join our marketplace and start connecting.</p>
             
             <div className="bg-white/10 backdrop-blur-md rounded-xl p-5 mb-8 border border-white/20">
@@ -145,7 +145,7 @@ export default function AuthHub() {
                 Registration Notice
               </h3>
               <p className="text-sm text-blue-50 leading-relaxed">
-                Registration is only for models. If you want to get the services of a model, you do not need to create an account and can connect with a model on the model discovery page.
+                Registration is only for escorts. If you want to get the services of an escort, you do not need to create an account and can connect with an escort on the escort discovery page.
               </p>
             </div>
 

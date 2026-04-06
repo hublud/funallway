@@ -51,7 +51,7 @@ export const INTERESTS_LIST = [
   "Lap dancing",
   "Massage",
   "MMF 3somes",
-  "Modelling",
+  "Escorting",
   "O-Level (Oral sex)",
   "Oral with condom",
   "OWO (Oral without condom)",

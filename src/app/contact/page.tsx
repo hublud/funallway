@@ -118,7 +118,7 @@ export default function ContactPage() {
               },
               { 
                 title: "Global Support", 
-                desc: "Our international desk handles enquiries for models outside of Nigeria with priority care.",
+                desc: "Our international desk handles enquiries for escorts outside of Nigeria with priority care.",
                 icon: MapPin 
               },
               { 
