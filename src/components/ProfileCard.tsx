@@ -6,10 +6,10 @@ import { Profile } from "@/lib/mockData";
 export default function ProfileCard({ profile }: { profile: Profile }) {
   return (
     <Link href={`/profile/${profile.id}`} className="group block h-full">
-      <div className="relative h-full flex flex-col bg-white rounded-[2rem] overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.06)] hover:shadow-[0_25px_60px_rgba(30,64,175,0.2)] transition-all duration-700 border-2 border-blue-100/50 hover:border-blue-400/30 transform hover:-translate-y-3 ring-1 ring-blue-600/5 group-hover:ring-blue-600/20">
+      <div className="relative h-full flex flex-col bg-white rounded-[2.5rem] p-2 overflow-hidden shadow-[0_15px_50px_rgba(30,64,175,0.1)] hover:shadow-[0_40px_80px_rgba(30,64,175,0.25)] transition-all duration-700 border-2 border-blue-100/80 hover:border-blue-500/30 transform hover:-translate-y-4 ring-1 ring-blue-600/5 group-hover:ring-blue-600/20">
         
         {/* Image Section */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden bg-slate-50">
+        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] bg-slate-50">
           <Image
             src={profile.profileImage}
             alt={profile.name}
