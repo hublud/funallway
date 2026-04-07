@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Profile } from "@/lib/mockData";
 import ProfileCard from "@/components/ProfileCard";
 import { Filter, Search, X, MapPin, Sparkles, ChevronDown, Check, Globe, Map as MapIcon, Loader2 } from "lucide-react";
@@ -138,6 +139,21 @@ export default function Home() {
             >
               Start Browsing
             </button>
+          </div>
+
+          {/* New Decorative Banner */}
+          <div className="mt-16 relative group max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
+            <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2.5rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
+            <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl border-4 border-white overflow-hidden">
+              <Image 
+                src="/images/home-banner.jpg" 
+                alt="Baddies212.com Banner" 
+                width={1200}
+                height={600}
+                className="w-full h-auto rounded-[2rem] object-cover"
+                priority
+              />
+            </div>
           </div>
         </div>
       </div>
