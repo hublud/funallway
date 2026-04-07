@@ -4,7 +4,7 @@ import { MessageCircle } from "lucide-react";
 
 export default function WhatsAppSupport() {
   const whatsappNumber = "2347038473900";
-  const message = encodeURIComponent("Hello Admin, I have an enquiry/complaint regarding funallway.");
+  const message = encodeURIComponent("Hello Admin, I have an enquiry/complaint regarding Baddies212.");
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
   return (

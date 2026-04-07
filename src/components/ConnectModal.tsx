@@ -51,7 +51,7 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
         
         // Auto-redirect after 2 seconds of showing success
         setTimeout(() => {
-          window.open(`https://wa.me/${profile.whatsappNumber}?text=Hello ${profile.name}, I found your profile on funallway!`, '_blank');
+          window.open(`https://wa.me/${profile.whatsappNumber}?text=Hello ${profile.name}, I found your profile on Baddies212!`, '_blank');
           onClose();
           // Reset for next time
           setPaymentSuccess(false);

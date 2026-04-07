@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function ContactPage() {
   const whatsappNumber = "2347038473900";
-  const message = encodeURIComponent("Hello Admin, I have an enquiry/complaint regarding funallway.");
+  const message = encodeURIComponent("Hello Admin, I have an enquiry/complaint regarding Baddies212.");
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
   return (
@@ -64,7 +64,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Email Enquiry</p>
-                      <p className="text-slate-900 font-bold">support@funallway.com</p>
+                      <p className="text-slate-900 font-bold">support@baddies212.com</p>
                     </div>
                   </div>
                 </div>

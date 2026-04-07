@@ -16,8 +16,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "funallway",
-  description: "Browse and connect directly on funallway",
+  title: "Baddies212",
+  description: "Browse and connect directly on Baddies212",
 };
 
 export const viewport: Viewport = {

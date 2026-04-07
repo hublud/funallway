@@ -88,7 +88,7 @@ export default function PrivacyPage() {
             </h2>
             <div className="pl-11 space-y-4 text-slate-600 leading-relaxed">
               <p>
-                You have full control over your data on funallway. You can request to update your information or delete your account at any time by contacting our admin support team.
+                You have full control over your data on Baddies212. You can request to update your information or delete your account at any time by contacting our admin support team.
               </p>
             </div>
           </section>
@@ -101,7 +101,7 @@ export default function PrivacyPage() {
                   <h3 className="text-xl font-black mb-1 italic">Questions about your data?</h3>
                   <p className="text-slate-400 text-sm">Our legal team is here to assist you.</p>
                 </div>
-                <Link href="mailto:support@funalltheway.com" className="bg-white text-slate-900 px-6 py-3 rounded-2xl font-black flex items-center gap-2 hover:bg-slate-100 transition shadow-lg">
+                <Link href="mailto:support@baddies212.com" className="bg-white text-slate-900 px-6 py-3 rounded-2xl font-black flex items-center gap-2 hover:bg-slate-100 transition shadow-lg">
                   <Mail className="w-5 h-5" />
                   Contact Support
                 </Link>

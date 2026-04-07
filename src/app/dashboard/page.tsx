@@ -221,7 +221,7 @@ function DashboardContent() {
           </div>
           <div>
             <h3 className="font-black text-green-800 text-lg">🎉 Payment Successful! Your profile is now active.</h3>
-            <p className="text-sm text-green-700 mt-1">You are now listed on the Discovery page. Welcome to funallway!</p>
+            <p className="text-sm text-green-700 mt-1">You are now listed on the Discovery page. Welcome to Baddies212!</p>
           </div>
         </div>
       )}
