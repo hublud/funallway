@@ -42,7 +42,7 @@ export default function Navbar() {
                 />
               </div>
               <span className="font-display font-black text-xl tracking-tight text-slate-900">
-                funall<span className="text-blue-600">way</span>
+                Baddies<span className="text-blue-600">212</span>
               </span>
             </Link>
             <div className="hidden sm:flex items-center gap-2">
