@@ -17,6 +17,7 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [price, setPrice] = useState(DEFAULT_SETTINGS.connection_fee);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   useEffect(() => {
     async function loadPrice() {
@@ -27,8 +28,6 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
   }, [isOpen]);
 
   if (!isOpen) return null;
-
-  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   const handlePayment = () => {
     if (!email || !email.includes("@")) {
