@@ -79,21 +79,11 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
           });
         } catch (err) {
           console.error("Failed to record connection fee:", err);
-          // Non-blocking — WhatsApp still opens even if recording fails
         }
 
-        // Open immediately while still in user-gesture context (prevents mobile block)
-        const opened = window.open(url, "_blank");
-
-        // If browser blocked the popup, user will see the manual button on success screen
-        if (opened) {
-          setTimeout(() => {
-            onClose();
-            setPaymentSuccess(false);
-            setEmail("");
-            setWhatsappUrl("");
-          }, 3000);
-        }
+        // We removed automatic window.open() here because mobile WebViews 
+        // (like Instagram/Facebook) crash when automatically redirecting to deep links.
+        // Instead, the user will see the Success screen and click the button manually.
       },
     });
 
@@ -135,8 +125,8 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
               <p className="text-slate-600 mb-4 font-medium">
                 Payment of ₦{price.toLocaleString()} verified.
               </p>
-              <p className="text-slate-400 text-sm mb-6">
-                Opening WhatsApp chat now...
+              <p className="text-slate-500 font-bold text-sm mb-6">
+                Click the button below to start your chat.
               </p>
               {/* Manual fallback button in case popup was blocked */}
               {whatsappUrl && (
