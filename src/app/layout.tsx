@@ -18,6 +18,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Baddies212",
   description: "Browse and connect directly on Baddies212",
+  verification: {
+    google: "vi6GrkFysJVF4IdNFlPI55op5Sw1V1LWbO1bfxwypbk",
+  },
 };
 
 export const viewport: Viewport = {

@@ -32,6 +32,38 @@ export default function ContactPage() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+        
+        {/* Top Security Notice */}
+        <div className="mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+          <div className="relative group overflow-hidden">
+            <div className="absolute -inset-1 bg-gradient-to-tr from-amber-600/20 to-amber-400/10 rounded-[40px] blur-xl opacity-70 group-hover:opacity-100 transition duration-1000"></div>
+            <div className="relative bg-white p-8 sm:p-12 rounded-[40px] border-4 border-amber-50 shadow-2xl">
+              <div className="flex flex-col md:flex-row gap-8 items-start">
+                <div className="w-16 h-16 rounded-[24px] bg-amber-50 flex items-center justify-center shrink-0 border border-amber-100 text-amber-600">
+                  <Sparkles className="w-8 h-8" />
+                </div>
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-display font-black text-slate-900 tracking-tight uppercase tracking-widest text-amber-600">Safety & Payment Notice</h2>
+                  <div className="space-y-4 text-slate-600 font-medium leading-relaxed text-lg italic">
+                    <p>
+                      Hello gentlemen, owing to cases where clients have run off after getting service before payment, 
+                      escorts now demand all tributes/tokens/previously agreed on fees before service.
+                    </p>
+                    <p>
+                      Clients are also <strong className="text-slate-900 font-black underline">EXPECTED</strong> to provide 
+                      transportation upfront to enable an escort to reach them. 
+                    </p>
+                    <div className="p-4 bg-red-50 rounded-2xl border border-red-100 text-red-700 not-italic text-sm font-bold">
+                      Please do not hesitate to report any Fraudulent Escort that receives transport and doesn't show up. 
+                      Platform integrity is our priority.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Main Contact Card */}
@@ -135,37 +167,6 @@ export default function ContactPage() {
                 <p className="text-slate-500 text-sm font-medium leading-relaxed">{item.desc}</p>
               </div>
             ))}
-          </div>
-
-          {/* Important Security Notice */}
-          <div className="lg:col-span-12 mt-12 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
-            <div className="relative group overflow-hidden">
-              <div className="absolute -inset-1 bg-gradient-to-tr from-amber-600/20 to-amber-400/10 rounded-[40px] blur-xl opacity-70 group-hover:opacity-100 transition duration-1000"></div>
-              <div className="relative bg-white p-8 sm:p-12 rounded-[40px] border-4 border-amber-50 shadow-2xl">
-                <div className="flex flex-col md:flex-row gap-8 items-start">
-                  <div className="w-16 h-16 rounded-[24px] bg-amber-50 flex items-center justify-center shrink-0 border border-amber-100 text-amber-600">
-                    <Sparkles className="w-8 h-8" />
-                  </div>
-                  <div className="space-y-6">
-                    <h3 className="text-2xl font-display font-black text-slate-900 tracking-tight uppercase tracking-widest text-amber-600">Safety & Payment Notice</h3>
-                    <div className="space-y-4 text-slate-600 font-medium leading-relaxed text-lg italic">
-                      <p>
-                        Hello gentlemen, owing to cases where clients have run off after getting service before payment, 
-                        escorts now demand all tributes/tokens/previously agreed on fees before service.
-                      </p>
-                      <p>
-                        Clients are also <strong className="text-slate-900 font-black underline">EXPECTED</strong> to provide 
-                        transportation upfront to enable an escort to reach them. 
-                      </p>
-                      <div className="p-4 bg-red-50 rounded-2xl border border-red-100 text-red-700 not-italic text-sm font-bold">
-                        Please do not hesitate to report any Fraudulent Escort that receives transport and doesn't show up. 
-                        Platform integrity is our priority.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
