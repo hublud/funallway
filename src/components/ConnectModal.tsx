@@ -37,15 +37,21 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
     setError(null);
     setLoading(true);
 
-    const handler = (window as any).PaystackPop.setup({
-      key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-      email: email,
-      amount: price * 100, // Kobo
-      currency: "NGN",
-      ref: `CON-${Date.now()}-${Math.floor(Math.random() * 1000000)}`,
-      onClose: () => {
-        setLoading(false);
-      },
+    try {
+      if (typeof (window as any).PaystackPop === "undefined") {
+        throw new Error("Payment gateway could not load. Please disable adblockers or check your connection.");
+      }
+
+      const handler = (window as any).PaystackPop.setup({
+        key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
+        email: email,
+        amount: Math.round(price * 100), // Kobo (rounded just in case of decimals)
+        currency: "NGN",
+        ref: `CON-${Date.now()}-${Math.floor(Math.random() * 1000000)}`,
+        onClose: () => {
+          setLoading(false);
+          setError("Payment was cancelled.");
+        },
       callback: async (response: any) => {
         setLoading(false);
 
@@ -87,6 +93,11 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
     });
 
     handler.openIframe();
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Payment gateway couldn't load. Please refresh.");
+      setLoading(false);
+    }
   };
 
 
