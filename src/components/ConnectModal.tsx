@@ -52,7 +52,7 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
           setLoading(false);
           setError("Payment was cancelled.");
         },
-      callback: async (response: any) => {
+      callback: (response: any) => {
         setLoading(false);
 
         // FIX 1: Properly encode WhatsApp URL and guarantee Country Code
@@ -71,20 +71,18 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
         setPaymentSuccess(true);
 
         // FIX 2: Record the connection fee transaction in the database
-        try {
-          await fetch("/api/payment/record-connection", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              modelId: profile.id,
-              payerEmail: email,
-              amount: price,
-              reference: response.reference,
-            }),
-          });
-        } catch (err) {
+        fetch("/api/payment/record-connection", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            modelId: profile.id,
+            payerEmail: email,
+            amount: price,
+            reference: response.reference,
+          }),
+        }).catch(err => {
           console.error("Failed to record connection fee:", err);
-        }
+        });
 
         // We removed automatic window.open() here because mobile WebViews 
         // (like Instagram/Facebook) crash when automatically redirecting to deep links.
