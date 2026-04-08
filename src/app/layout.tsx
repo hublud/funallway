@@ -16,11 +16,79 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Baddies212",
-  description: "Browse and connect directly on Baddies212",
+  // --- Core ---
+  title: {
+    default: "Baddies212 | Premium Escort Directory Nigeria",
+    template: "%s | Baddies212",
+  },
+  description:
+    "Baddies212 is Nigeria's premier escort directory. Browse verified, subscribed profiles and connect directly via WhatsApp. Discreet, safe, and stress-free.",
+  keywords: [
+    "escort Nigeria",
+    "escorts Lagos",
+    "escorts Abuja",
+    "escort directory Nigeria",
+    "Nigerian escorts",
+    "companions Nigeria",
+    "Baddies212",
+    "meet escorts Nigeria",
+    "escort booking Nigeria",
+  ],
+
+  // --- Canonical & Robots ---
+  metadataBase: new URL("https://www.baddies212.com"),
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  // --- Open Graph (Facebook, WhatsApp, LinkedIn previews) ---
+  openGraph: {
+    type: "website",
+    locale: "en_NG",
+    url: "https://www.baddies212.com",
+    siteName: "Baddies212",
+    title: "Baddies212 | Premium Escort Directory Nigeria",
+    description:
+      "Browse verified escort profiles across Nigeria. Connect directly via WhatsApp — discreet, secure, and stress-free. Start browsing on Baddies212 today.",
+    images: [
+      {
+        url: "/images/home-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Baddies212 — Nigeria's Premier Escort Directory",
+      },
+    ],
+  },
+
+  // --- Twitter / X Card ---
+  twitter: {
+    card: "summary_large_image",
+    title: "Baddies212 | Premium Escort Directory Nigeria",
+    description:
+      "Browse verified escort profiles and connect via WhatsApp. Discreet and stress-free.",
+    images: ["/images/home-banner.jpg"],
+  },
+
+  // --- Google Verification ---
   verification: {
     google: "vi6GrkFysJVF4IdNFlPI55op5Sw1V1LWbO1bfxwypbk",
   },
+
+  // --- Author ---
+  authors: [{ name: "Baddies212", url: "https://www.baddies212.com" }],
+  creator: "Baddies212",
+  publisher: "Baddies212",
 };
 
 export const viewport: Viewport = {
