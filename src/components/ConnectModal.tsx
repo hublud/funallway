@@ -47,15 +47,44 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
       onClose: () => {
         setLoading(false);
       },
-      callback: (response: any) => {
+      callback: async (response: any) => {
         setLoading(false);
-        const url = `https://wa.me/${profile.whatsappNumber}?text=Hello ${profile.name}, I found your profile on Baddies212!`;
+
+        // FIX 1: Properly encode WhatsApp URL and guarantee Country Code
+        const waText = encodeURIComponent(
+          `Hello ${profile.name}, I found your profile on Baddies212 and would like to connect!`
+        );
+        
+        let safeNum = (profile.whatsappNumber || "234").replace(/\D/g, "");
+        // If it's a local Nigerian number starting with 0, convert to 234...
+        if (safeNum.startsWith("0")) {
+          safeNum = "234" + safeNum.substring(1);
+        }
+        
+        const url = `https://wa.me/${safeNum}?text=${waText}`;
         setWhatsappUrl(url);
         setPaymentSuccess(true);
 
+        // FIX 2: Record the connection fee transaction in the database
+        try {
+          await fetch("/api/payment/record-connection", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              modelId: profile.id,
+              payerEmail: email,
+              amount: price,
+              reference: response.reference,
+            }),
+          });
+        } catch (err) {
+          console.error("Failed to record connection fee:", err);
+          // Non-blocking — WhatsApp still opens even if recording fails
+        }
+
         // Open immediately while still in user-gesture context (prevents mobile block)
-        const opened = window.open(url, '_blank');
-        
+        const opened = window.open(url, "_blank");
+
         // If browser blocked the popup, user will see the manual button on success screen
         if (opened) {
           setTimeout(() => {
@@ -70,6 +99,7 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
 
     handler.openIframe();
   };
+
 
   return (
     <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center sm:p-4">
