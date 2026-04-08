@@ -141,16 +141,16 @@ export default function Home() {
             </button>
           </div>
 
-          {/* New Decorative Banner */}
-          <div className="mt-16 relative group w-[300px] h-[300px] mx-auto animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-            <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2.5rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
-            <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
+          {/* Top Decorative Banner */}
+          <div className="mt-16 relative group w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] mx-auto animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
+            <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
+            <div className="relative bg-white p-2 rounded-[2rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
               <Image 
                 src="/images/home-banner.jpg" 
                 alt="Baddies212.com Banner" 
-                width={300}
-                height={300}
-                className="w-full h-full object-contain rounded-[2rem]"
+                width={240}
+                height={240}
+                className="w-full h-full object-contain rounded-[1.5rem]"
                 priority
               />
             </div>
@@ -344,15 +344,15 @@ export default function Home() {
         </div>
 
         {/* Bottom Decorative Banner */}
-        <div className="mt-24 mb-12 relative group max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-          <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2.5rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
-          <div className="relative bg-white p-2 rounded-[2.5rem] shadow-2xl border-4 border-white overflow-hidden">
+        <div className="mt-24 mb-12 relative group w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] mx-auto animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+          <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
+          <div className="relative bg-white p-2 rounded-[2rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
             <Image 
               src="/images/bottom-banner.jpg" 
               alt="Baddies212.com Promotional Banner" 
-              width={1200}
-              height={600}
-              className="w-full h-auto rounded-[2rem] object-cover"
+              width={240}
+              height={240}
+              className="w-full h-full object-contain rounded-[1.5rem]"
             />
           </div>
         </div>
