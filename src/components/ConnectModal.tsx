@@ -28,6 +28,8 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
 
   if (!isOpen) return null;
 
+  const [whatsappUrl, setWhatsappUrl] = useState("");
+
   const handlePayment = () => {
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email address.");
@@ -47,16 +49,22 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
       },
       callback: (response: any) => {
         setLoading(false);
+        const url = `https://wa.me/${profile.whatsappNumber}?text=Hello ${profile.name}, I found your profile on Baddies212!`;
+        setWhatsappUrl(url);
         setPaymentSuccess(true);
+
+        // Open immediately while still in user-gesture context (prevents mobile block)
+        const opened = window.open(url, '_blank');
         
-        // Auto-redirect after 2 seconds of showing success
-        setTimeout(() => {
-          window.open(`https://wa.me/${profile.whatsappNumber}?text=Hello ${profile.name}, I found your profile on Baddies212!`, '_blank');
-          onClose();
-          // Reset for next time
-          setPaymentSuccess(false);
-          setEmail("");
-        }, 2000);
+        // If browser blocked the popup, user will see the manual button on success screen
+        if (opened) {
+          setTimeout(() => {
+            onClose();
+            setPaymentSuccess(false);
+            setEmail("");
+            setWhatsappUrl("");
+          }, 3000);
+        }
       },
     });
 
@@ -94,12 +102,25 @@ export default function ConnectModal({ profile, isOpen, onClose }: ConnectModalP
                 <Check className="w-10 h-10 stroke-[3]" />
               </div>
               <h3 className="text-2xl font-black text-slate-900 mb-2 font-display uppercase tracking-tight">Success!</h3>
-              <p className="text-slate-600 mb-2 font-medium">
+              <p className="text-slate-600 mb-4 font-medium">
                 Payment of ₦{price.toLocaleString()} verified.
               </p>
-              <p className="text-slate-400 text-sm animate-pulse">
-                Redirecting to WhatsApp...
+              <p className="text-slate-400 text-sm mb-6">
+                Opening WhatsApp chat now...
               </p>
+              {/* Manual fallback button in case popup was blocked */}
+              {whatsappUrl && (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => { onClose(); setPaymentSuccess(false); setEmail(""); setWhatsappUrl(""); }}
+                  className="w-full bg-green-500 hover:bg-green-600 text-white font-black py-4 px-6 rounded-2xl transition shadow-lg shadow-green-200 flex items-center justify-center gap-2"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                  Chat on WhatsApp
+                </a>
+              )}
             </div>
           ) : (
             <div className="animate-in fade-in duration-300">
