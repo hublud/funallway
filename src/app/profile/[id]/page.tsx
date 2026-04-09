@@ -147,6 +147,21 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                   Connecting reveals direct WhatsApp contact. Ensure you conduct all communications respectfully according to our platform guidelines.
                 </p>
               </div>
+
+              {/* Mobile-only CTA callout with arrow */}
+              <div className="sm:hidden mt-10 mb-8 flex flex-col items-center justify-center animate-in fade-in slide-in-from-bottom-4 duration-700">
+                <div className="bg-rose-50 border border-rose-200 shadow-xl shadow-rose-100 px-6 py-4 rounded-3xl text-center relative max-w-[280px]">
+                  <p className="text-sm font-bold text-rose-700 leading-relaxed">
+                    Click on the WhatsApp button to connect with the above baddie.
+                  </p>
+                </div>
+                {/* Red Arrow */}
+                <div className="mt-4 text-red-500 hover:text-red-600 transition animate-bounce">
+                  <svg className="w-8 h-8 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
