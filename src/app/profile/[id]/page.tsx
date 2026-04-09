@@ -99,29 +99,29 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
 
             {/* Rates Section */}
             {profile.rates && profile.rates.length > 0 && (
-              <div className="mb-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="mb-10 animate-in fade-in slide-in-from-bottom-4 duration-500 w-full max-w-full">
                 <h3 className="text-xl font-black text-slate-900 mb-4 flex items-center gap-2">
                   Rates (NGN)
                 </h3>
-                <div className="bg-slate-50/50 rounded-3xl border border-slate-100 overflow-hidden">
-                  <table className="w-full text-left border-collapse">
+                <div className="bg-slate-50/50 rounded-3xl border border-slate-100 overflow-x-auto w-full pb-2">
+                  <table className="w-full text-left border-collapse min-w-[400px]">
                     <thead>
                       <tr className="border-b border-slate-100">
-                        <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest pl-8">Service</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Incall</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center pr-8">Outcall</th>
+                        <th className="px-4 sm:px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest pl-4 sm:pl-8">Service</th>
+                        <th className="px-4 sm:px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">Incall</th>
+                        <th className="px-4 sm:px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center pr-4 sm:pr-8">Outcall</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100">
                       {profile.rates.map((rate) => (
                         <tr key={rate.service} className="group hover:bg-white transition-colors">
-                          <td className="px-6 py-5 font-bold text-slate-600 text-sm pl-8 group-hover:text-pink-600 transition-colors uppercase tracking-tight">
+                          <td className="px-4 sm:px-6 py-5 font-bold text-slate-600 text-sm pl-4 sm:pl-8 group-hover:text-pink-600 transition-colors uppercase tracking-tight">
                             {rate.service}
                           </td>
-                          <td className="px-6 py-5 text-center font-black text-slate-900">
+                          <td className="px-4 sm:px-6 py-5 text-center font-black text-slate-900">
                             {rate.incall > 0 ? `₦${rate.incall.toLocaleString()}` : '—'}
                           </td>
-                          <td className="px-6 py-5 text-center font-black text-slate-900 pr-8">
+                          <td className="px-4 sm:px-6 py-5 text-center font-black text-slate-900 pr-4 sm:pr-8">
                             {rate.outcall > 0 ? `₦${rate.outcall.toLocaleString()}` : '—'}
                           </td>
                         </tr>

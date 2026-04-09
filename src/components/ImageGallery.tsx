@@ -31,7 +31,7 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
           src={images[selectedIndex]}
           alt={`${altPrefix} - Image ${selectedIndex + 1}`}
           fill
-          className="object-cover transition-all duration-500"
+          className="object-cover object-top transition-all duration-500"
           priority
           sizes="(max-width: 768px) 100vw, 50vw"
         />
@@ -81,7 +81,7 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
                 src={img}
                 alt={`${altPrefix} thumbnail ${idx + 1}`}
                 fill
-                className="object-cover"
+                className="object-cover object-top"
                 sizes="80px"
               />
             </button>
