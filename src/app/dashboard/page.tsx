@@ -528,6 +528,14 @@ function DashboardContent() {
                <h2 className="font-bold text-xl mb-6 text-slate-800 border-b border-slate-100 pb-4">Manage Media (Updated Preview)</h2>
                
                <div className="space-y-8">
+                  {/* Privacy Notice */}
+                  <div className="flex items-start gap-2 bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3">
+                    <span className="text-sm mt-0.5">🔒</span>
+                    <p className="text-xs text-indigo-700 font-medium leading-snug">
+                      <span className="font-black">Privacy Notice:</span> Models <span className="font-black uppercase">must</span> cover their faces with an emoji, sticker, or blur it completely before uploading any photos to protect their identity.
+                    </p>
+                  </div>
+
                   {/* Cover Photo */}
                   <div>
                     <div className="flex justify-between items-center mb-2">

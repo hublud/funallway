@@ -144,8 +144,12 @@ export default function AuthHub() {
                 <span className="flex-shrink-0 w-6 h-6 bg-yellow-400/20 rounded-full flex items-center justify-center text-sm">!</span>
                 Registration Notice
               </h3>
-              <p className="text-sm text-blue-50 leading-relaxed">
+              <p className="text-sm text-blue-50 leading-relaxed mb-3">
                 Registration is only for escorts. If you want to get the services of an escort, you do not need to create an account and can connect with an escort on the escort discovery page.
+              </p>
+              <p className="text-sm text-yellow-100 leading-relaxed font-semibold bg-black/20 p-3 rounded-lg border border-white/10 flex items-start gap-2">
+                <span>⚠️</span> 
+                <span>Models must cover their faces with an emoji, sticker, or blur their faces before uploading any public images to the platform.</span>
               </p>
             </div>
 

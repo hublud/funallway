@@ -465,6 +465,13 @@ export default function RegisterWizard() {
                 </p>
               </div>
 
+              <div className="flex items-start gap-2 bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 mb-4">
+                <span className="text-sm mt-0.5">🔒</span>
+                <p className="text-xs text-indigo-700 font-medium leading-snug">
+                  <span className="font-black">Privacy Notice:</span> Models <span className="font-black uppercase">must</span> cover their faces with an emoji, sticker, or blur it completely before uploading any photos.
+                </p>
+              </div>
+
               {imageErrors.length > 0 && (
                 <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-4 space-y-1">
                   {imageErrors.map((err, i) => <p key={i} className="text-xs text-red-700 font-semibold">&#10060; {err}</p>)}
