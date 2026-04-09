@@ -2,12 +2,13 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { User, Image as ImageIcon, CreditCard, Save, Map, Search, X, UploadCloud, Shield, Calendar, Sparkles, Loader2, LogOut } from "lucide-react";
+import { User, Image as ImageIcon, CreditCard, Save, Map, Search, X, UploadCloud, Shield, Calendar, Sparkles, Loader2, LogOut, Menu, Home } from "lucide-react";
 import { INTERESTS_LIST } from "@/lib/mockData";
 import { NIGERIAN_STATES, WORLD_COUNTRIES } from "@/lib/states";
 import FilePreview from "@/components/FilePreview";
 import { createClient } from "@/utils/supabase/client";
 import { getPlatformSettings, type PlatformSettings, DEFAULT_SETTINGS } from "@/utils/pricing";
+import Link from "next/link";
 
 type Tab = "profile" | "services" | "rates" | "media" | "security" | "subscription";
 
@@ -18,6 +19,7 @@ function DashboardContent() {
   const [activeTab, setActiveTab] = useState<Tab>("profile");
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const supabase = createClient();
   const [isLoading, setIsLoading] = useState(true);
@@ -270,66 +272,92 @@ function DashboardContent() {
           <p className="font-bold">Loading your dashboard...</p>
         </div>
       ) : (
-        <div className="w-full">
+        <div className="w-full relative">
+          
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden flex items-center justify-between mb-6">
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="flex items-center gap-2 px-5 py-3.5 bg-blue-600 shadow-md shadow-blue-200 rounded-xl font-bold text-white hover:bg-blue-700 transition"
+            >
+              <Menu className="w-5 h-5" />
+              <span>Menu Options</span>
+            </button>
+          </div>
+
           <div className="flex flex-col md:flex-row gap-8">
         
         {/* Sidebar Nav */}
-        <div className="w-full md:w-64 flex-shrink-0">
-          <nav className="flex flex-row md:flex-col gap-2 overflow-x-auto pb-4 md:pb-0 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
-            <button 
-              onClick={() => setActiveTab("profile")}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'profile' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50'}`}
-            >
-              <User className="w-4 h-4" /> Profile Settings
-            </button>
-            <button 
-              onClick={() => setActiveTab("media")}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'media' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50'}`}
-            >
-              <ImageIcon className="w-4 h-4" /> Media & Gallery
-            </button>
-            <button 
-              onClick={() => setActiveTab("services")}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'services' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50'}`}
-            >
-              <Sparkles className="w-4 h-4" /> My Services / Interests
-            </button>
-            <button 
-              onClick={() => setActiveTab("rates")}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'rates' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50'}`}
-            >
-              <CreditCard className="w-4 h-4" /> Rate Card
-            </button>
-            <button 
-              onClick={() => setActiveTab("subscription")}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'subscription' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50'}`}
-            >
-              <CreditCard className="w-4 h-4" /> Subscription
-            </button>
-            <button 
-              onClick={() => setActiveTab("security")}
-              className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'security' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50'}`}
-            >
-              <Shield className="w-4 h-4" /> Security
-            </button>
-
-            <div className="mt-4 pt-4 border-t border-slate-100 hidden md:block">
-              <button 
-                onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm text-red-600 hover:bg-red-50 transition border border-transparent hover:border-red-100"
-              >
-                <LogOut className="w-4 h-4" /> Logout
+        <div className={`
+          fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm transition-opacity md:static md:bg-transparent md:z-auto md:w-64 md:flex-shrink-0 md:opacity-100 md:pointer-events-auto
+          ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}
+        `}>
+          <div className={`
+            absolute left-0 top-0 bottom-0 w-[280px] bg-white p-6 shadow-2xl transition-transform md:static md:w-full md:p-0 md:bg-transparent md:shadow-none md:translate-x-0 overflow-y-auto
+            ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+          `}>
+            
+            <div className="flex items-center justify-between md:hidden mb-6 pb-4 border-b border-slate-100">
+              <h2 className="font-extrabold text-2xl text-slate-900">Menu</h2>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition">
+                <X className="w-5 h-5" />
               </button>
             </div>
-            
-            {/* Mobile Logout */}
-            <button 
-              onClick={handleLogout}
-              className="md:hidden flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm text-red-600 bg-white border border-slate-100 shadow-sm whitespace-nowrap"
-            >
-              <LogOut className="w-4 h-4" /> Logout
-            </button>
-          </nav>
+
+            <nav className="flex flex-col gap-2 pb-4 md:pb-0">
+              <Link href="/" className="flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition shadow-sm border bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-blue-600">
+                <Home className="w-4 h-4" /> Home / Discovery
+              </Link>
+              
+              <div className="h-px bg-slate-100 my-2 hidden md:block"></div>
+
+              <button 
+                onClick={() => { setActiveTab("profile"); setIsMobileMenuOpen(false); }}
+                className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'profile' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50 hover:text-blue-600'}`}
+              >
+                <User className="w-4 h-4" /> Profile Settings
+              </button>
+              <button 
+                onClick={() => { setActiveTab("media"); setIsMobileMenuOpen(false); }}
+                className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'media' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50 hover:text-blue-600'}`}
+              >
+                <ImageIcon className="w-4 h-4" /> Media & Gallery
+              </button>
+              <button 
+                onClick={() => { setActiveTab("services"); setIsMobileMenuOpen(false); }}
+                className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'services' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50 hover:text-blue-600'}`}
+              >
+                <Sparkles className="w-4 h-4" /> My Services / Interests
+              </button>
+              <button 
+                onClick={() => { setActiveTab("rates"); setIsMobileMenuOpen(false); }}
+                className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'rates' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50 hover:text-blue-600'}`}
+              >
+                <CreditCard className="w-4 h-4" /> Rate Card
+              </button>
+              <button 
+                onClick={() => { setActiveTab("subscription"); setIsMobileMenuOpen(false); }}
+                className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'subscription' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50 hover:text-blue-600'}`}
+              >
+                <CreditCard className="w-4 h-4" /> Subscription
+              </button>
+              <button 
+                onClick={() => { setActiveTab("security"); setIsMobileMenuOpen(false); }}
+                className={`flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm transition whitespace-nowrap shadow-sm border ${activeTab === 'security' ? 'bg-blue-600 text-white border-blue-700 shadow-blue-100' : 'bg-white text-slate-600 border-slate-100 hover:bg-slate-50 hover:text-blue-600'}`}
+              >
+                <Shield className="w-4 h-4" /> Security
+              </button>
+
+              <div className="mt-4 pt-4 border-t border-slate-100">
+                <button 
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold text-sm text-red-600 bg-white hover:bg-red-50 transition border border-slate-100 hover:border-red-100 shadow-sm"
+                >
+                  <LogOut className="w-4 h-4" /> Logout
+                </button>
+              </div>
+            </nav>
+          </div>
         </div>
 
         {/* Content Area */}
