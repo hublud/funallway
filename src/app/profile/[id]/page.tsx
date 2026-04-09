@@ -131,7 +131,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                 </div>
                 {/* Scroll indicator for mobile displays */}
                 <div className="mt-2 text-center text-[10px] sm:hidden text-slate-400 font-bold uppercase tracking-widest flex items-center justify-center gap-1 opacity-80">
-                  <span>&larr;</span> Swipe to see all columns <span>&rarr;</span>
+                  <span>&larr;</span> SWIPE TO LEFT TO SEE ALL PRICES
                 </div>
               </div>
             )}
