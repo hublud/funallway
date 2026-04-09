@@ -19,6 +19,12 @@ export default function Home() {
   const [selectedGender, setSelectedGender] = useState<"all" | "male" | "female">("all");
   const [locationType, setLocationType] = useState<"all" | "national" | "international">("all");
   const [showFilters, setShowFilters] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 50;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedStates, selectedGender, locationType]);
 
   useEffect(() => {
     async function fetchProfiles() {
@@ -320,10 +326,54 @@ export default function Home() {
                 </div>
 
                 <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-8">
-                  {section.profiles.map((profile) => (
-                    <ProfileCard key={`${section.title}-${profile.id}`} profile={profile} />
+                  {section.profiles
+                    .slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
+                    .map((profile) => (
+                      <ProfileCard key={`${section.title}-${profile.id}`} profile={profile} />
                   ))}
                 </div>
+
+                {/* Pagination Controls */}
+                {section.profiles.length > ITEMS_PER_PAGE && (
+                  <div className="mt-12 flex flex-wrap items-center justify-center gap-2 animate-in fade-in duration-500">
+                    <button 
+                      disabled={currentPage === 1}
+                      onClick={() => {
+                        setCurrentPage(p => Math.max(1, p - 1));
+                        document.getElementById('search-section')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="px-4 py-3 bg-white text-slate-500 disabled:opacity-40 font-bold rounded-xl shadow-sm border border-slate-100 hover:bg-slate-50 transition active:scale-95"
+                    >
+                      &larr; Prev
+                    </button>
+                    
+                    <div className="flex items-center gap-1 overflow-x-auto max-w-full px-2 py-1 scrollbar-hide">
+                      {Array.from({ length: Math.ceil(section.profiles.length / ITEMS_PER_PAGE) }).map((_, i) => (
+                        <button 
+                          key={i}
+                          onClick={() => {
+                            setCurrentPage(i + 1);
+                            document.getElementById('search-section')?.scrollIntoView({ behavior: 'smooth' });
+                          }}
+                          className={`w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center rounded-xl font-black transition-all ${currentPage === i + 1 ? 'bg-blue-600 text-white shadow-md shadow-blue-200' : 'bg-white text-slate-600 border border-slate-100 hover:bg-slate-50 active:scale-95'}`}
+                        >
+                          {i + 1}
+                        </button>
+                      ))}
+                    </div>
+
+                    <button 
+                      disabled={currentPage >= Math.ceil(section.profiles.length / ITEMS_PER_PAGE)}
+                      onClick={() => {
+                        setCurrentPage(p => p + 1);
+                        document.getElementById('search-section')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="px-4 py-3 bg-white text-slate-500 disabled:opacity-40 font-bold rounded-xl shadow-sm border border-slate-100 hover:bg-slate-50 transition active:scale-95"
+                    >
+                      Next &rarr;
+                    </button>
+                  </div>
+                )}
               </div>
             ))
           ) : (
