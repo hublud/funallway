@@ -141,7 +141,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
             <div className="mb-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
               <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-shadow duration-500">
                 <Image
-                  src="/images/advertise-banner-2.png"
+                  src="/images/advertise-banner.jpg"
                   alt="Advertise with us at Baddies212"
                   width={1200}
                   height={675}
