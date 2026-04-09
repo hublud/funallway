@@ -78,6 +78,8 @@ function DashboardContent() {
   // Media State
   const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
   const [galleryPhotos, setGalleryPhotos] = useState<File[]>([]);
+  const [existingProfileImage, setExistingProfileImage] = useState<string | null>(null);
+  const [existingGalleryImages, setExistingGalleryImages] = useState<string[]>([]);
 
   // Security State
   const [passwordState, setPasswordState] = useState({
@@ -133,6 +135,8 @@ function DashboardContent() {
         setIsFeatured(profile.is_featured);
         setPlan(profile.plan || "monthly");
         setExpiresAt(profile.subscription_expires_at);
+        setExistingProfileImage(profile.profile_image || null);
+        setExistingGalleryImages(profile.gallery_images || []);
       }
       setIsLoading(false);
       
@@ -148,6 +152,32 @@ function DashboardContent() {
     setIsSaving(true);
     
     try {
+      let finalProfileImageUrl = existingProfileImage;
+      let finalGalleryImageUrls = [...existingGalleryImages];
+
+      // Upload new cover photo if any
+      if (coverPhoto) {
+        const ext = coverPhoto.name.split('.').pop() || 'jpg';
+        const path = `${userId}/cover-${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage.from('profiles').upload(path, coverPhoto);
+        if (!upErr) {
+           finalProfileImageUrl = supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl;
+        }
+      }
+
+      // Upload new gallery photos if any
+      if (galleryPhotos.length > 0) {
+        for (let i = 0; i < galleryPhotos.length; i++) {
+          const file = galleryPhotos[i];
+          const ext = file.name.split('.').pop() || 'jpg';
+          const path = `${userId}/gallery-${Date.now()}-${i}.${ext}`;
+          const { error: upErr } = await supabase.storage.from('profiles').upload(path, file);
+          if (!upErr) {
+             finalGalleryImageUrls.push(supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl);
+          }
+        }
+      }
+
       const { error } = await supabase
         .from('profiles')
         .update({
@@ -160,11 +190,19 @@ function DashboardContent() {
           bio: formData.bio,
           can_travel_to: formData.travelStates,
           rates: formData.rates,
-          interests: formData.interests
+          interests: formData.interests,
+          profile_image: finalProfileImageUrl,
+          gallery_images: finalGalleryImageUrls
         })
         .eq('id', userId);
 
       if (error) throw error;
+      
+      // Update local state with the saved URLs and clear pending uploads
+      setExistingProfileImage(finalProfileImageUrl);
+      setExistingGalleryImages(finalGalleryImageUrls);
+      setCoverPhoto(null);
+      setGalleryPhotos([]);
       
       alert("Settings saved successfully!");
       setIsEditing(false); // Exit edit mode on save
@@ -549,6 +587,14 @@ function DashboardContent() {
                       </div>
                       <input type="file" className="hidden" accept="image/*" onChange={(e) => { if(e.target.files && e.target.files.length > 0) setCoverPhoto(e.target.files[0]) }} />
                     </label>
+
+                    {existingProfileImage && !coverPhoto && (
+                      <div className="mt-4 relative group aspect-[16/9] w-full rounded-xl overflow-hidden border border-slate-200">
+                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Current Cover</p>
+                        <img src={existingProfileImage} alt="Current Cover" className="w-full h-full object-cover rounded-xl" />
+                      </div>
+                    )}
+
                     {coverPhoto && (
                       <div className="mt-4">
                         <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">New Cover Preview</p>
@@ -565,9 +611,29 @@ function DashboardContent() {
                   <div>
                     <div className="flex justify-between items-center mb-2">
                       <p className="text-sm font-semibold text-slate-700">Gallery Photos</p>
-                      {galleryPhotos.length > 0 && <span className="text-xs bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded-full">+{galleryPhotos.length} Added</span>}
+                      {galleryPhotos.length > 0 && <span className="text-xs bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded-full">+{galleryPhotos.length} Unsaved</span>}
                     </div>
-                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition mb-4">
+
+                    {existingGalleryImages.length > 0 && (
+                      <div className="mb-4">
+                        <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 gap-4">
+                          {existingGalleryImages.map((url, idx) => (
+                            <div key={`existing-${idx}`} className="relative group aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+                              <img src={url} alt={`Gallery ${idx}`} className="w-full h-full object-cover" />
+                              <button 
+                                onClick={() => setExistingGalleryImages(prev => prev.filter((_, i) => i !== idx))} 
+                                className="absolute top-2 right-2 bg-red-500 rounded-full p-1.5 text-white opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-600"
+                                title="Remove photo"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-slate-100 transition mb-4 mt-2">
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <UploadCloud className="w-8 h-8 text-slate-400 mb-2" />
                         <p className="text-sm text-slate-600 font-medium">Add more photos to gallery</p>
