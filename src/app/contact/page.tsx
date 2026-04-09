@@ -96,7 +96,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Email Enquiry</p>
-                      <p className="text-slate-900 font-bold">funalltheway4life@gmail.com</p>
+                      <p className="text-slate-900 font-bold">baddies212online@gmail.com</p>
                     </div>
                   </div>
                 </div>
