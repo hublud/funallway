@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { MapPin, ChevronLeft, Sparkles } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import ProfileClientActions from "@/components/ProfileClientActions";
 import ImageGallery from "@/components/ImageGallery";
 import { createClient } from "@/utils/supabase/server";
@@ -135,6 +136,19 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                 </div>
               </div>
             )}
+
+            {/* Advertise with Baddies212 Banner */}
+            <div className="mb-8 w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-shadow duration-500">
+                <Image
+                  src="/images/advertise-banner-2.png"
+                  alt="Advertise with us at Baddies212"
+                  width={1200}
+                  height={675}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </div>
 
             <div className="mt-auto">
               <div className="hidden sm:block">
