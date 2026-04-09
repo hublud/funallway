@@ -746,36 +746,7 @@ function DashboardContent() {
                   </div>
                 )}
 
-               <div className="space-y-6">
-                  <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                    <div className="flex justify-between items-start mb-2">
-                       <div>
-                         <h4 className="font-bold text-slate-800 text-lg">Discovery Visibility</h4>
-                         <p className="text-sm text-slate-500">Temporarily hide your profile without canceling billing.</p>
-                       </div>
-                       <button onClick={() => setIsSubscribed(!isSubscribed)} className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${isSubscribed ? 'bg-blue-600' : 'bg-slate-300'}`}>
-                         <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${isSubscribed ? 'left-7' : 'left-1'}`} />
-                       </button>
-                    </div>
-                  </div>
 
-                  <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200">
-                    <div className="flex justify-between items-start mb-2">
-                       <div>
-                         <h4 className="font-bold text-amber-900 text-lg flex items-center gap-2"><Sparkles className="w-5 h-5" /> Profile Boost</h4>
-                         <p className="text-sm text-amber-700/80">Pin your profile to the top of discovery pages globally.</p>
-                       </div>
-                       <button onClick={() => setIsFeatured(!isFeatured)} className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${isFeatured ? 'bg-amber-500' : 'bg-slate-300'}`}>
-                         <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-transform ${isFeatured ? 'left-7' : 'left-1'}`} />
-                       </button>
-                    </div>
-                    {!isFeatured && (
-                      <button className="mt-4 w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-2.5 rounded-xl transition shadow-sm">
-                        Boost for ₦10,000
-                      </button>
-                    )}
-                  </div>
-               </div>
              </div>
           )}
 
