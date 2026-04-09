@@ -31,7 +31,7 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
           {/* Info overlaid on image with better typography */}
           <div className="absolute bottom-0 left-0 right-0 p-5 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
             <div className="flex flex-col gap-0.5">
-              <h3 className="text-xl font-display font-black text-white flex items-center gap-2 leading-none tracking-tight">
+              <h3 className="text-xl font-display font-black text-white flex items-center gap-2 leading-none tracking-tight capitalize">
                 {profile.name} <span className="text-white/60 font-medium">{profile.age}</span>
               </h3>
               <div className="flex items-center justify-between mt-2">
