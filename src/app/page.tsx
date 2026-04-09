@@ -410,9 +410,9 @@ export default function Home() {
           )}
         </div>
 
-        <div className="mt-10 mb-6 flex flex-col md:flex-row items-center justify-center gap-6">
+        <div className="mt-10 mb-6 flex flex-col md:flex-row items-center justify-center gap-6 w-full">
           {/* Bottom Decorative Banner */}
-          <div className="relative group w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+          <div className="relative group w-[95%] max-w-[350px] aspect-square sm:w-[300px] sm:h-[300px] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
             <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
             <div className="relative bg-white p-2 rounded-[2rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
               <Image 
@@ -426,7 +426,7 @@ export default function Home() {
           </div>
           
           {/* Second Bottom Decorative Banner */}
-          <div className="relative group w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+          <div className="relative group w-[95%] max-w-[350px] aspect-square sm:w-[300px] sm:h-[300px] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
             <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
             <div className="relative bg-white p-2 rounded-[2rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
               <Image 
