@@ -121,7 +121,7 @@ export default function Home() {
         <div className="relative max-w-5xl mx-auto text-center space-y-8 animate-in fade-in slide-in-from-top-8 duration-1000">
           {/* Advertise Banner */}
           <div className="mx-auto w-full max-w-2xl mb-2 animate-in fade-in slide-in-from-top-4 duration-700">
-            <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-shadow duration-500 h-36 sm:h-44">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-shadow duration-500 h-44 sm:h-52">
               <Image
                 src="/images/homepage-ad.jpg"
                 alt="Advertise with us at Baddies212"
