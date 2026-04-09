@@ -3,22 +3,21 @@ import { createAdminClient } from '@/utils/supabase/admin';
 
 export async function POST(req: Request) {
   try {
-    const formData = await req.formData();
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const username = formData.get('username') as string;
-    const age = parseInt(formData.get('age') as string) || 18;
-    const gender = formData.get('gender') as string;
-    const baseState = formData.get('baseState') as string;
-    const whatsapp = formData.get('whatsapp') as string;
-    const bio = formData.get('bio') as string;
-    const plan = formData.get('plan') as string;
-    const travelStates = JSON.parse(formData.get('travelStates') as string);
-    const interests = JSON.parse(formData.get('interests') as string);
-    const rates = JSON.parse(formData.get('rates') as string);
-
-    const coverPhoto = formData.get('coverPhoto') as File | null;
-    const galleryPhotos = formData.getAll('galleryPhotos') as File[];
+    const body = await req.json();
+    const {
+      email,
+      password,
+      username,
+      age,
+      gender,
+      baseState,
+      whatsapp,
+      bio,
+      plan,
+      travelStates,
+      interests,
+      rates
+    } = body;
 
     const supabase = createAdminClient();
 
@@ -37,47 +36,16 @@ export async function POST(req: Request) {
 
     const userId = authData.user.id;
 
-    // 2. Upload Images
-    let profileImageUrl = "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&auto=format&fit=crop";
-    let galleryImageUrls: string[] = [];
+    // 2. Insert minimal Profile (Images will be handled by the client after login)
+    // We add placeholders in case the client fails to upload
+    const profileImageUrl = "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&auto=format&fit=crop";
+    const galleryImageUrls: string[] = [];
 
-    if (coverPhoto && coverPhoto.size > 0) {
-      const arrayBuffer = await coverPhoto.arrayBuffer();
-      const buffer = new Uint8Array(arrayBuffer);
-      const ext = coverPhoto.name.split('.').pop() || 'jpg';
-      const path = `${userId}/cover-${Date.now()}.${ext}`;
-      const { error: upErr } = await supabase.storage.from('profiles').upload(path, buffer, {
-        contentType: coverPhoto.type || 'image/jpeg',
-      });
-      if (!upErr) {
-        profileImageUrl = supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl;
-      }
-    }
-
-    if (galleryPhotos && galleryPhotos.length > 0) {
-      for (let i = 0; i < galleryPhotos.length; i++) {
-        const file = galleryPhotos[i];
-        if (file.size > 0) {
-          const arrayBuffer = await file.arrayBuffer();
-          const buffer = new Uint8Array(arrayBuffer);
-          const ext = file.name.split('.').pop() || 'jpg';
-          const path = `${userId}/gallery-${Date.now()}-${i}.${ext}`;
-          const { error: upErr } = await supabase.storage.from('profiles').upload(path, buffer, {
-            contentType: file.type || 'image/jpeg',
-          });
-          if (!upErr) {
-            galleryImageUrls.push(supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl);
-          }
-        }
-      }
-    }
-
-    // 3. Insert Profile
     const { error: profileError } = await supabase.from('profiles').insert({
       id: userId,
       name: username,
       username: username,
-      age,
+      age: parseInt(age) || 18,
       state: baseState,
       location_type: 'national',
       gender,

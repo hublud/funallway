@@ -97,30 +97,24 @@ export default function RegisterWizard() {
     setIsPaying(true);
     setErrorMessage("");
     try {
-      // 1. Build FormData
-      const formDataToSend = new FormData();
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('password', formData.password);
-      formDataToSend.append('username', formData.username);
-      formDataToSend.append('age', formData.age);
-      formDataToSend.append('gender', formData.gender);
-      formDataToSend.append('baseState', formData.baseState);
-      formDataToSend.append('whatsapp', formData.whatsapp);
-      formDataToSend.append('bio', formData.bio);
-      formDataToSend.append('plan', subPlan);
-      formDataToSend.append('travelStates', JSON.stringify(formData.travelStates));
-      formDataToSend.append('interests', JSON.stringify(formData.interests));
-      formDataToSend.append('rates', JSON.stringify(formData.rates));
-      
-      if (coverPhoto) formDataToSend.append('coverPhoto', coverPhoto);
-      for (const file of galleryPhotos) {
-        formDataToSend.append('galleryPhotos', file);
-      }
-
-      // 2. Submit to backend API which creates user cleanly
+      // 1. Send JSON to the lightweight backend route
       const res = await fetch('/api/auth/register-model', {
         method: 'POST',
-        body: formDataToSend
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          username: formData.username,
+          age: formData.age,
+          gender: formData.gender,
+          baseState: formData.baseState,
+          whatsapp: formData.whatsapp,
+          bio: formData.bio,
+          plan: subPlan,
+          travelStates: formData.travelStates,
+          interests: formData.interests,
+          rates: formData.rates
+        })
       });
       const data = await res.json();
       
@@ -130,11 +124,43 @@ export default function RegisterWizard() {
 
       const userId = data.userId;
 
-      // 3. Immediately sign the user in so the dashboard session is active
+      // 2. Immediately sign the user in so the local session has credentials 
+      // (email was auto-confirmed by the admin API)
       await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password
       });
+
+      // 3. Now that the user is authenticated, we upload their images natively to bypass platform payload limits
+      let profileImageUrl = "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&auto=format&fit=crop";
+      let galleryImageUrls: string[] = [];
+
+      try {
+        if (coverPhoto) {
+          const ext = coverPhoto.name.split('.').pop();
+          const path = `${userId}/cover-${Date.now()}.${ext}`;
+          const { error: upErr } = await supabase.storage.from('profiles').upload(path, coverPhoto);
+          if (!upErr) profileImageUrl = supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl;
+        }
+
+        if (galleryPhotos.length > 0) {
+          for (let i = 0; i < galleryPhotos.length; i++) {
+            const file = galleryPhotos[i];
+            const ext = file.name.split('.').pop();
+            const path = `${userId}/gallery-${Date.now()}-${i}.${ext}`;
+            const { error: upErr } = await supabase.storage.from('profiles').upload(path, file);
+            if (!upErr) galleryImageUrls.push(supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl);
+          }
+        }
+
+        // 4. Update the profile row with the final image URLs
+        await supabase.from('profiles').update({
+          profile_image: profileImageUrl,
+          gallery_images: galleryImageUrls
+        }).eq('id', userId);
+      } catch (uploadError) {
+        console.warn("Images upload failed, using defaults. Error:", uploadError);
+      }
 
       // 4. Open Paystack Inline Popup
       const amount = subPlan === 'weekly' 
