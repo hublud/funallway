@@ -97,62 +97,44 @@ export default function RegisterWizard() {
     setIsPaying(true);
     setErrorMessage("");
     try {
-      // 1. Sign Up User
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      // 1. Build FormData
+      const formDataToSend = new FormData();
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('password', formData.password);
+      formDataToSend.append('username', formData.username);
+      formDataToSend.append('age', formData.age);
+      formDataToSend.append('gender', formData.gender);
+      formDataToSend.append('baseState', formData.baseState);
+      formDataToSend.append('whatsapp', formData.whatsapp);
+      formDataToSend.append('bio', formData.bio);
+      formDataToSend.append('plan', subPlan);
+      formDataToSend.append('travelStates', JSON.stringify(formData.travelStates));
+      formDataToSend.append('interests', JSON.stringify(formData.interests));
+      formDataToSend.append('rates', JSON.stringify(formData.rates));
+      
+      if (coverPhoto) formDataToSend.append('coverPhoto', coverPhoto);
+      for (const file of galleryPhotos) {
+        formDataToSend.append('galleryPhotos', file);
+      }
+
+      // 2. Submit to backend API which creates user cleanly
+      const res = await fetch('/api/auth/register-model', {
+        method: 'POST',
+        body: formDataToSend
+      });
+      const data = await res.json();
+      
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to create account");
+      }
+
+      const userId = data.userId;
+
+      // 3. Immediately sign the user in so the dashboard session is active
+      await supabase.auth.signInWithPassword({
         email: formData.email,
-        password: formData.password,
-        options: { data: { username: formData.username } }
+        password: formData.password
       });
-      if (authError) throw authError;
-      if (!authData.user) { setIsPaying(false); return; }
-
-      const userId = authData.user.id;
-
-      // 2. Upload Images
-      let profileImageUrl = "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&auto=format&fit=crop";
-      let galleryImageUrls: string[] = [];
-      if (coverPhoto) {
-        const ext = coverPhoto.name.split('.').pop();
-        const path = `${userId}/cover-${Date.now()}.${ext}`;
-        const { error: upErr } = await supabase.storage.from('profiles').upload(path, coverPhoto);
-        if (!upErr) profileImageUrl = supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl;
-      }
-      if (galleryPhotos.length > 0) {
-        for (let i = 0; i < galleryPhotos.length; i++) {
-          const file = galleryPhotos[i];
-          const ext = file.name.split('.').pop();
-          const path = `${userId}/gallery-${Date.now()}-${i}.${ext}`;
-          const { error: upErr } = await supabase.storage.from('profiles').upload(path, file);
-          if (!upErr) galleryImageUrls.push(supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl);
-        }
-      }
-
-      // 3. Insert Profile as pending (will be activated after payment)
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: userId,
-        name: formData.username,
-        username: formData.username,
-        age: parseInt(formData.age) || 18,
-        gender: formData.gender,
-        location_type: 'national',
-        state: formData.baseState,
-        bio: formData.bio,
-        profile_image: profileImageUrl,
-        gallery_images: galleryImageUrls,
-        is_featured: false,
-        is_subscribed: false,
-        status: "pending",
-        plan: subPlan,
-        whatsapp_number: formData.whatsapp,
-        can_travel_to: formData.travelStates,
-        rates: formData.rates,
-        interests: formData.interests
-      });
-
-      if (profileError) {
-        if (profileError.code === '23505') throw new Error("Username already taken.");
-        throw profileError;
-      }
 
       // 4. Open Paystack Inline Popup
       const amount = subPlan === 'weekly' 

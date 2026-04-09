@@ -608,7 +608,7 @@ export default function AdminDashboard() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex flex-col">
-                      <span className="text-sm font-black text-slate-900 leading-none mb-1">{profile.plan === 'monthly' ? '₦30,000' : '₦10,000'}</span>
+                      <span className="text-sm font-black text-slate-900 leading-none mb-1">₦{profile.plan === 'monthly' ? platformSettings.monthlySubPrice.toLocaleString() : platformSettings.weeklySubPrice.toLocaleString()}</span>
                       <span className="text-[10px] text-slate-500 uppercase font-black tracking-tighter opacity-70">{profile.plan} Plan</span>
                     </div>
                   </td>
@@ -685,7 +685,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex items-center gap-2">
                   <CreditCard className="w-4 h-4 text-slate-300" />
-                  {profile.plan === 'monthly' ? '₦30,000' : '₦10,000'}
+                  ₦{profile.plan === 'monthly' ? platformSettings.monthlySubPrice.toLocaleString() : platformSettings.weeklySubPrice.toLocaleString()}
                 </div>
               </div>
 
