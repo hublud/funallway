@@ -136,6 +136,7 @@ export default function AdminDashboard() {
   const [newLocName, setNewLocName] = useState("");
   const [newLocType, setNewLocType] = useState<'national' | 'international'>('national');
   const [isAddingLoc, setIsAddingLoc] = useState(false);
+  const [showQuickAddLoc, setShowQuickAddLoc] = useState(false);
 
   const handleAddLocation = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1069,7 +1070,16 @@ export default function AdminDashboard() {
                     </select>
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-700 ml-1">Location</label>
+                    <div className="flex justify-between items-center ml-1">
+                      <label className="text-xs font-bold text-slate-700">Location</label>
+                      <button 
+                        type="button"
+                        onClick={() => setShowQuickAddLoc(true)}
+                        className="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:underline"
+                      >
+                        + Add New
+                      </button>
+                    </div>
                     <select 
                       required
                       value={newModel.state}
@@ -1415,7 +1425,16 @@ export default function AdminDashboard() {
                     </select>
                   </div>
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-700 ml-1">Location</label>
+                    <div className="flex justify-between items-center ml-1">
+                      <label className="text-xs font-bold text-slate-700">Location</label>
+                      <button 
+                        type="button"
+                        onClick={() => setShowQuickAddLoc(true)}
+                        className="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:underline"
+                      >
+                        + Add New
+                      </button>
+                    </div>
                     <select required value={newModel.state} onChange={e => setNewModel({...newModel, state: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-600 transition appearance-none">
                       <option value="">Select Location</option>
                       {getMergedStates(newModel.locationType).map(s => <option key={s} value={s}>{s}</option>)}
@@ -1782,6 +1801,56 @@ export default function AdminDashboard() {
                     />
                   </div>
                 </div>
+
+                <div className="pt-4 border-t border-slate-100">
+                  <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-4 flex items-center gap-2">
+                    <Globe className="w-3 h-3 text-blue-600" />
+                    Manage Locations
+                  </h3>
+                  
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-1 gap-2">
+                      <input 
+                        type="text"
+                        placeholder="New location name..."
+                        value={newLocName}
+                        onChange={(e) => setNewLocName(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-600 transition"
+                      />
+                      <div className="flex gap-2">
+                        <select 
+                          value={newLocType}
+                          onChange={(e) => setNewLocType(e.target.value as any)}
+                          className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-[10px] font-black uppercase outline-none focus:ring-2 focus:ring-blue-600 transition"
+                        >
+                          <option value="national">Nigeria</option>
+                          <option value="international">Intl</option>
+                        </select>
+                        <button 
+                          onClick={handleAddLocation}
+                          disabled={isAddingLoc || !newLocName.trim()}
+                          className="flex-1 bg-blue-600 text-white py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-sm hover:bg-blue-700 transition disabled:opacity-50"
+                        >
+                          Add Location
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="max-h-[150px] overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+                      {customLocations.map(loc => (
+                        <div key={loc.id} className="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-lg border border-slate-100">
+                          <div className="flex items-center gap-2">
+                            <span className={`w-1.5 h-1.5 rounded-full ${loc.type === 'national' ? 'bg-green-500' : 'bg-blue-500'}`} />
+                            <span className="text-xs font-bold text-slate-700">{loc.name}</span>
+                          </div>
+                          <button onClick={() => handleDeleteLocation(loc.id)} className="p-1 text-slate-300 hover:text-red-500 transition">
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="bg-blue-50 p-4 rounded-2xl border border-blue-100">
@@ -1827,6 +1896,61 @@ export default function AdminDashboard() {
                 className="w-full bg-slate-900 text-white font-bold py-4 rounded-2xl hover:bg-slate-800 transition shadow-xl shadow-slate-200 active:scale-[0.98] disabled:opacity-50"
               >
                 {isSavingSettings ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* QUICK ADD LOCATION MODAL */}
+      {showQuickAddLoc && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setShowQuickAddLoc(false)} />
+          <div className="relative bg-white w-full max-w-sm rounded-[32px] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+            <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+              <h3 className="font-black text-slate-800 uppercase tracking-widest text-[10px]">Quick Add Location</h3>
+              <button onClick={() => setShowQuickAddLoc(false)} className="p-1.5 hover:bg-slate-100 rounded-lg transition"><X className="w-5 h-5" /></button>
+            </div>
+            <div className="p-8 space-y-4">
+               <div className="space-y-1">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Location Name</label>
+                <input 
+                  required
+                  type="text"
+                  placeholder="E.g. Port Harcourt"
+                  value={newLocName}
+                  onChange={(e) => setNewLocName(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none transition"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Type</label>
+                <div className="grid grid-cols-2 gap-2 bg-slate-50 p-1 rounded-2xl border border-slate-200">
+                  <button 
+                    type="button"
+                    onClick={() => setNewLocType('national')}
+                    className={`py-2 rounded-xl text-[10px] font-black uppercase transition-all ${newLocType === 'national' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-100'}`}
+                  >
+                    Nigeria
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setNewLocType('international')}
+                    className={`py-2 rounded-xl text-[10px] font-black uppercase transition-all ${newLocType === 'international' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-100'}`}
+                  >
+                    Intl
+                  </button>
+                </div>
+              </div>
+              <button 
+                onClick={async () => {
+                  await handleAddLocation({ preventDefault: () => {} } as any);
+                  setShowQuickAddLoc(false);
+                }}
+                disabled={isAddingLoc || !newLocName.trim()}
+                className="w-full bg-navy text-white py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-navy/20 active:scale-95 transition disabled:opacity-50"
+              >
+                {isAddingLoc ? "Saving..." : "Save Location"}
               </button>
             </div>
           </div>
