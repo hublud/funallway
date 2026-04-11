@@ -60,7 +60,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
               <div className="flex flex-col gap-2 mt-3">
                 <div className="flex items-center gap-2 text-slate-500 text-lg">
                   <MapPin className="w-5 h-5" />
-                  <span>{profile.state}, Nigeria</span>
+                  <span>{profile.state}{profile.locationType === 'national' && ', Nigeria'}</span>
                 </div>
                 {profile.canTravelTo && profile.canTravelTo.length > 0 && (
                   <div className="flex flex-wrap gap-2 items-center mt-2">
