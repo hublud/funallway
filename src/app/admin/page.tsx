@@ -138,6 +138,11 @@ export default function AdminDashboard() {
   const [isAddingLoc, setIsAddingLoc] = useState(false);
   const [showQuickAddLoc, setShowQuickAddLoc] = useState(false);
 
+  const openQuickAdd = () => {
+    setNewLocType(newModel.locationType);
+    setShowQuickAddLoc(true);
+  };
+
   const handleAddLocation = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newLocName.trim()) return;
@@ -150,6 +155,7 @@ export default function AdminDashboard() {
       if (error) throw error;
       if (data) {
         setCustomLocations(prev => [...prev, data[0]].sort((a, b) => a.name.localeCompare(b.name)));
+        setNewModel(prev => ({ ...prev, state: data[0].name }));
         setNewLocName("");
       }
     } catch (err: any) {
@@ -1074,7 +1080,7 @@ export default function AdminDashboard() {
                       <label className="text-xs font-bold text-slate-700">Location</label>
                       <button 
                         type="button"
-                        onClick={() => setShowQuickAddLoc(true)}
+                        onClick={openQuickAdd}
                         className="bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter hover:bg-blue-700 transition shadow-sm"
                       >
                         + add
@@ -1429,7 +1435,7 @@ export default function AdminDashboard() {
                       <label className="text-xs font-bold text-slate-700">Location</label>
                       <button 
                         type="button"
-                        onClick={() => setShowQuickAddLoc(true)}
+                        onClick={openQuickAdd}
                         className="bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter hover:bg-blue-700 transition shadow-sm"
                       >
                         + add
@@ -1941,6 +1947,9 @@ export default function AdminDashboard() {
                     Intl
                   </button>
                 </div>
+                <p className="text-[9px] text-slate-400 mt-2 px-1 italic">
+                  Note: International locations only appear when "International" is selected as the Region.
+                </p>
               </div>
               <button 
                 onClick={async () => {
