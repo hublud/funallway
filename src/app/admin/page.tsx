@@ -772,7 +772,7 @@ export default function AdminDashboard() {
         </div>
 
           </>
-        ) : (
+        ) : activeTab === 'financials' ? (
           <div className="bg-white min-h-[400px]">
             <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <h2 className="font-bold text-xl text-slate-800">Transaction History</h2>
