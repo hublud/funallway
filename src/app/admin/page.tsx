@@ -1418,7 +1418,7 @@ export default function AdminDashboard() {
                     <label className="text-xs font-bold text-slate-700 ml-1">Location</label>
                     <select required value={newModel.state} onChange={e => setNewModel({...newModel, state: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-600 transition appearance-none">
                       <option value="">Select Location</option>
-                      {(newModel.locationType === "national" ? NIGERIAN_STATES : WORLD_COUNTRIES).map(s => <option key={s} value={s}>{s}</option>)}
+                      {getMergedStates(newModel.locationType).map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                   <div className="space-y-1">
@@ -1541,7 +1541,7 @@ export default function AdminDashboard() {
                     />
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 h-48 overflow-y-auto p-2 border border-slate-200 rounded-xl bg-white custom-scrollbar-rich">
-                    {(newModel.locationType === 'national' ? NIGERIAN_STATES : WORLD_COUNTRIES)
+                    {getMergedStates(newModel.locationType)
                       .filter(dest => dest.toLowerCase().includes(destinationSearch.toLowerCase()))
                       .map(dest => {
                       const isSelected = newModel.canTravelTo.includes(dest);
