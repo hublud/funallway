@@ -214,7 +214,7 @@ export default function Home() {
       <div id="search-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         
         {/* Search & Filter Glass Box */}
-        <div className="glass p-6 sm:p-8 rounded-[40px] space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+        <div className="glass p-6 sm:p-8 rounded-[40px] space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 relative z-50">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
             
             {/* Search Input */}
@@ -258,7 +258,7 @@ export default function Home() {
                 </button>
 
                 {showFilters && (
-                  <div className="absolute top-full left-0 right-0 mt-4 z-[100] animate-in zoom-in-95 fade-in duration-200">
+                  <div className="absolute top-full left-0 right-0 mt-4 z-[1000] animate-in zoom-in-95 fade-in duration-200">
                     <div className="w-full max-h-[400px] overflow-y-auto bg-white rounded-3xl shadow-2xl border border-slate-100 p-4">
                       {/* State Search Input */}
                       <div className="mb-4 relative group">
