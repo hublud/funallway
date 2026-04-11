@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { NIGERIAN_STATES } from "@/lib/states";
-import { Check, ChevronRight, UploadCloud, MapPin, Map, Image as ImageIcon, CreditCard, X, Search, Sparkles, Eye, EyeOff } from "lucide-react";
+import { NIGERIAN_STATES, WORLD_COUNTRIES } from "@/lib/states";
+import { Check, ChevronRight, UploadCloud, MapPin, Map, Image as ImageIcon, CreditCard, X, Search, Sparkles, Eye, EyeOff, Globe } from "lucide-react";
 import { INTERESTS_LIST } from "@/lib/mockData";
 import { getPlatformSettings, type PlatformSettings, DEFAULT_SETTINGS } from "@/utils/pricing";
 import Link from "next/link";
@@ -17,13 +17,21 @@ export default function RegisterWizard() {
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [platformSettings, setPlatformSettings] = useState<PlatformSettings>(DEFAULT_SETTINGS);
+  const [customLocations, setCustomLocations] = useState<any[]>([]);
 
   useEffect(() => {
     async function loadSettings() {
       const settings = await getPlatformSettings();
       setPlatformSettings(settings);
     }
+    
+    async function loadLocations() {
+      const { data } = await supabase.from('custom_locations').select('name, type');
+      if (data) setCustomLocations(data);
+    }
+
     loadSettings();
+    loadLocations();
   }, []);
   
   // Form State
@@ -34,6 +42,7 @@ export default function RegisterWizard() {
     bio: "",
     age: "",
     gender: "female" as "male" | "female",
+    locationType: "national" as "national" | "international",
     baseState: "",
     whatsapp: "",
     travelStates: [] as string[],
@@ -60,7 +69,13 @@ export default function RegisterWizard() {
   // Search State for Step 2
   const [stateSearch, setStateSearch] = useState("");
 
-  const filteredStates = NIGERIAN_STATES.filter(s => 
+  const getMergedStates = (type: 'national' | 'international') => {
+    const defaultList = type === 'national' ? NIGERIAN_STATES : WORLD_COUNTRIES;
+    const customList = customLocations.filter(l => l.type === type).map(l => l.name);
+    return [...new Set([...defaultList, ...customList])].sort();
+  };
+
+  const filteredStates = getMergedStates(formData.locationType).filter(s => 
     s.toLowerCase().includes(stateSearch.toLowerCase()) && 
     !formData.travelStates.includes(s) &&
     s !== formData.baseState
@@ -108,6 +123,7 @@ export default function RegisterWizard() {
           age: formData.age,
           gender: formData.gender,
           baseState: formData.baseState,
+          locationType: formData.locationType,
           whatsapp: formData.whatsapp,
           bio: formData.bio,
           plan: subPlan,
@@ -305,16 +321,40 @@ export default function RegisterWizard() {
                     </button>
                   </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Where are you based?</label>
-                  <select 
-                    value={formData.baseState}
-                    onChange={(e) => setFormData({...formData, baseState: e.target.value})}
-                    className="w-full border border-slate-300 rounded-xl px-4 py-3.5 bg-white text-base focus:ring-2 focus:ring-blue-600 outline-none transition appearance-none"
-                  >
-                    <option value="" disabled>Select your resident state</option>
-                    {NIGERIAN_STATES.map(state => <option key={state} value={state}>{state}</option>)}
-                  </select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Region</label>
+                    <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl">
+                      {[
+                        { id: 'national', icon: MapPin, label: 'Nigeria' },
+                        { id: 'international', icon: Globe, label: 'Intl' }
+                      ].map((l) => {
+                        const Icon = l.icon;
+                        return (
+                          <button
+                            key={l.id}
+                            type="button"
+                            onClick={() => setFormData({...formData, locationType: l.id as any, baseState: ""})}
+                            className={`flex-1 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${formData.locationType === l.id ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-900'}`}
+                          >
+                            <Icon className="w-3.5 h-3.5" />
+                            {l.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Base Location</label>
+                    <select 
+                      value={formData.baseState}
+                      onChange={(e) => setFormData({...formData, baseState: e.target.value})}
+                      className="w-full border border-slate-300 rounded-xl px-4 py-3 bg-white text-base focus:ring-2 focus:ring-blue-600 outline-none transition appearance-none"
+                    >
+                      <option value="" disabled>Select Location</option>
+                      {getMergedStates(formData.locationType).map(state => <option key={state} value={state}>{state}</option>)}
+                    </select>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">WhatsApp Number</label>

@@ -20,6 +20,7 @@ export default function Home() {
   const [locationType, setLocationType] = useState<"all" | "national" | "international">("all");
   const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [customLocations, setCustomLocations] = useState<{name: string, type: string}[]>([]);
   const ITEMS_PER_PAGE = 50;
 
   useEffect(() => {
@@ -51,7 +52,14 @@ export default function Home() {
       }
       setIsLoading(false);
     }
+
+    async function fetchLocations() {
+      const { data } = await supabase.from('custom_locations').select('name, type');
+      if (data) setCustomLocations(data);
+    }
+
     fetchProfiles();
+    fetchLocations();
   }, []);
 
   const toggleState = (state: string) => {
@@ -64,9 +72,17 @@ export default function Home() {
 
   const filteredStates = (() => {
     let list: string[] = [];
-    if (locationType === "national") list = NIGERIAN_STATES;
-    else if (locationType === "international") list = WORLD_COUNTRIES;
-    else list = [...NIGERIAN_STATES, ...WORLD_COUNTRIES];
+    
+    const customNational = customLocations.filter(l => l.type === 'national').map(l => l.name);
+    const customInternational = customLocations.filter(l => l.type === 'international').map(l => l.name);
+
+    if (locationType === "national") {
+      list = [...new Set([...NIGERIAN_STATES, ...customNational])].sort();
+    } else if (locationType === "international") {
+      list = [...new Set([...WORLD_COUNTRIES, ...customInternational])].sort();
+    } else {
+      list = [...new Set([...NIGERIAN_STATES, ...customNational, ...WORLD_COUNTRIES, ...customInternational])].sort();
+    }
     
     return list.filter(s => s.toLowerCase().includes(stateQuery.toLowerCase()));
   })();

@@ -22,7 +22,10 @@ import {
   TrendingUp,
   History,
   Receipt,
-  LogOut
+  LogOut,
+  Globe,
+  Trash2,
+  MapPin as MapPinIcon
 } from "lucide-react";
 import Image from "next/image";
 import { NIGERIAN_STATES, WORLD_COUNTRIES } from "@/lib/states";
@@ -68,6 +71,13 @@ export default function AdminDashboard() {
         .select('*')
         .order('created_at', { ascending: false });
       if (txData) setTransactions(txData);
+
+      // Fetch custom locations
+      const { data: locData } = await supabase
+        .from('custom_locations')
+        .select('*')
+        .order('name', { ascending: true });
+      if (locData) setCustomLocations(locData);
     }
     loadData();
   }, []);
@@ -113,7 +123,7 @@ export default function AdminDashboard() {
   const [destinationSearch, setDestinationSearch] = useState("");
   
   // Financial & Tab State
-  const [activeTab, setActiveTab] = useState<"directory" | "financials">("directory");
+  const [activeTab, setActiveTab] = useState<"directory" | "financials" | "locations">("directory");
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [platformSettings, setPlatformSettings] = useState({
     weeklySubPrice: 15000,
@@ -121,6 +131,49 @@ export default function AdminDashboard() {
     connectionFee: 5000
   });
   const [isSavingSettings, setIsSavingSettings] = useState(false);
+
+  const [customLocations, setCustomLocations] = useState<any[]>([]);
+  const [newLocName, setNewLocName] = useState("");
+  const [newLocType, setNewLocType] = useState<'national' | 'international'>('national');
+  const [isAddingLoc, setIsAddingLoc] = useState(false);
+
+  const handleAddLocation = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newLocName.trim()) return;
+    setIsAddingLoc(true);
+    try {
+      const { data, error } = await supabase
+        .from('custom_locations')
+        .insert({ name: newLocName.trim(), type: newLocType })
+        .select();
+      if (error) throw error;
+      if (data) {
+        setCustomLocations(prev => [...prev, data[0]].sort((a, b) => a.name.localeCompare(b.name)));
+        setNewLocName("");
+      }
+    } catch (err: any) {
+      alert("Error adding location: " + err.message);
+    } finally {
+      setIsAddingLoc(false);
+    }
+  };
+
+  const handleDeleteLocation = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this location?")) return;
+    try {
+      const { error } = await supabase.from('custom_locations').delete().eq('id', id);
+      if (error) throw error;
+      setCustomLocations(prev => prev.filter(l => l.id !== id));
+    } catch (err: any) {
+      alert("Error deleting location: " + err.message);
+    }
+  };
+
+  const getMergedStates = (type: 'national' | 'international') => {
+    const defaultList = type === 'national' ? NIGERIAN_STATES : WORLD_COUNTRIES;
+    const customList = customLocations.filter(l => l.type === type).map(l => l.name);
+    return [...new Set([...defaultList, ...customList])].sort();
+  };
 
   const [transactions, setTransactions] = useState<any[]>([]);
 
@@ -425,6 +478,12 @@ export default function AdminDashboard() {
               className={`px-4 py-1.5 rounded-lg text-sm font-bold transition ${activeTab === 'financials' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
             >
               Financials
+            </button>
+            <button 
+              onClick={() => setActiveTab("locations")}
+              className={`px-4 py-1.5 rounded-lg text-sm font-bold transition ${activeTab === 'locations' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              Locations
             </button>
           </div>
         </div>
@@ -785,6 +844,128 @@ export default function AdminDashboard() {
               <button className="text-blue-600 font-bold hover:underline">View Full Financial Report →</button>
             </div>
           </div>
+        ) : (
+          <div className="bg-white min-h-[400px]">
+             <div className="p-6 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <h2 className="font-bold text-xl text-slate-800">Custom Locations</h2>
+              <p className="text-sm text-slate-500 font-medium">Add countries or states that are missing from the default lists.</p>
+            </div>
+
+            <div className="p-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+              {/* Add Location Form */}
+              <div className="lg:col-span-4 space-y-6">
+                <div className="bg-slate-50 p-6 rounded-[32px] border border-slate-200 shadow-sm">
+                  <h3 className="font-black text-slate-800 uppercase tracking-widest text-[10px] mb-4">Add New Location</h3>
+                  <form onSubmit={handleAddLocation} className="space-y-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Location Name</label>
+                      <input 
+                        required
+                        type="text"
+                        placeholder="E.g. Port Harcourt"
+                        value={newLocName}
+                        onChange={(e) => setNewLocName(e.target.value)}
+                        className="w-full bg-white border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-600 outline-none transition"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Type</label>
+                      <div className="grid grid-cols-2 gap-2 bg-white p-1 rounded-2xl border border-slate-200">
+                        <button 
+                          type="button"
+                          onClick={() => setNewLocType('national')}
+                          className={`py-2 rounded-xl text-[10px] font-black uppercase transition-all ${newLocType === 'national' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
+                        >
+                          Nigeria
+                        </button>
+                        <button 
+                          type="button"
+                          onClick={() => setNewLocType('international')}
+                          className={`py-2 rounded-xl text-[10px] font-black uppercase transition-all ${newLocType === 'international' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-500 hover:bg-slate-50'}`}
+                        >
+                          Intl
+                        </button>
+                      </div>
+                    </div>
+                    <button 
+                      type="submit"
+                      disabled={isAddingLoc || !newLocName.trim()}
+                      className="w-full bg-navy text-white py-3.5 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-navy/20 hover:scale-[1.02] active:scale-95 transition disabled:opacity-50"
+                    >
+                      {isAddingLoc ? "Saving..." : "Save Location"}
+                    </button>
+                  </form>
+                </div>
+
+                <div className="bg-blue-50/50 p-6 rounded-[32px] border border-blue-100 italic text-sm text-blue-700">
+                  <p>Added locations will appear in the filter dropdowns and registration forms for all users.</p>
+                </div>
+              </div>
+
+              {/* Locations List */}
+              <div className="lg:col-span-8 space-y-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Nigeria (National) */}
+                  <div className="space-y-4">
+                    <h3 className="font-black text-slate-800 uppercase tracking-widest text-[10px] flex items-center gap-2">
+                      <MapPinIcon className="w-3 h-3 text-blue-600" />
+                      Custom Nigeria States
+                    </h3>
+                    <div className="bg-slate-50/50 border border-slate-100 rounded-[32px] overflow-hidden">
+                      <div className="p-4 space-y-2 max-h-[400px] overflow-y-auto custom-scrollbar">
+                        {customLocations.filter(l => l.type === 'national').length > 0 ? (
+                          customLocations.filter(l => l.type === 'national').map(loc => (
+                            <div key={loc.id} className="flex items-center justify-between bg-white px-4 py-3 rounded-2xl border border-slate-100 group">
+                              <span className="text-sm font-bold text-slate-700">{loc.name}</span>
+                              <button 
+                                onClick={() => handleDeleteLocation(loc.id)}
+                                className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="py-10 text-center space-y-2">
+                            <p className="text-xs text-slate-400 font-medium">No custom states added.</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* International */}
+                  <div className="space-y-4">
+                    <h3 className="font-black text-slate-800 uppercase tracking-widest text-[10px] flex items-center gap-2">
+                      <Globe className="w-3 h-3 text-blue-600" />
+                      Custom Intl Countries
+                    </h3>
+                    <div className="bg-slate-50/50 border border-slate-100 rounded-[32px] overflow-hidden">
+                      <div className="p-4 space-y-2 max-h-[400px] overflow-y-auto custom-scrollbar">
+                        {customLocations.filter(l => l.type === 'international').length > 0 ? (
+                          customLocations.filter(l => l.type === 'international').map(loc => (
+                            <div key={loc.id} className="flex items-center justify-between bg-white px-4 py-3 rounded-2xl border border-slate-100 group">
+                              <span className="text-sm font-bold text-slate-700">{loc.name}</span>
+                              <button 
+                                onClick={() => handleDeleteLocation(loc.id)}
+                                className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="py-10 text-center space-y-2">
+                            <p className="text-xs text-slate-400 font-medium">No custom countries added.</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </div>
 
@@ -896,7 +1077,7 @@ export default function AdminDashboard() {
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-600 transition appearance-none"
                     >
                       <option value="">Select Location</option>
-                      {(newModel.locationType === "national" ? NIGERIAN_STATES : WORLD_COUNTRIES).map(s => <option key={s} value={s}>{s}</option>)}
+                      {getMergedStates(newModel.locationType).map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                   <div className="space-y-1">
@@ -1093,7 +1274,7 @@ export default function AdminDashboard() {
                     />
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 h-48 overflow-y-auto p-2 border border-slate-100 rounded-xl custom-scrollbar-rich">
-                    {(newModel.locationType === 'national' ? NIGERIAN_STATES : WORLD_COUNTRIES)
+                    {getMergedStates(newModel.locationType)
                       .filter(dest => dest.toLowerCase().includes(destinationSearch.toLowerCase()))
                       .map(dest => {
                       const isSelected = newModel.canTravelTo.includes(dest);
