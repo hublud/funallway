@@ -450,9 +450,9 @@ export default function AdminDashboard() {
 
   const filteredProfiles = profiles
     .filter(p => {
-      const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          p.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          p.state.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = (p.name?.toLowerCase() || "").includes(searchQuery.toLowerCase()) || 
+                          (p.username?.toLowerCase() || "").includes(searchQuery.toLowerCase()) ||
+                          (p.state?.toLowerCase() || "").includes(searchQuery.toLowerCase());
       const matchesState = selectedStateFilter === "" || p.state === selectedStateFilter;
       return matchesSearch && matchesState;
     })
