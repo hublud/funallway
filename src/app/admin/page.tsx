@@ -1075,9 +1075,9 @@ export default function AdminDashboard() {
                       <button 
                         type="button"
                         onClick={() => setShowQuickAddLoc(true)}
-                        className="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:underline"
+                        className="bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter hover:bg-blue-700 transition shadow-sm"
                       >
-                        + Add New
+                        + add
                       </button>
                     </div>
                     <select 
@@ -1430,9 +1430,9 @@ export default function AdminDashboard() {
                       <button 
                         type="button"
                         onClick={() => setShowQuickAddLoc(true)}
-                        className="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:underline"
+                        className="bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter hover:bg-blue-700 transition shadow-sm"
                       >
-                        + Add New
+                        + add
                       </button>
                     </div>
                     <select required value={newModel.state} onChange={e => setNewModel({...newModel, state: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-600 transition appearance-none">
