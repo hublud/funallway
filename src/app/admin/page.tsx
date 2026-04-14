@@ -647,7 +647,7 @@ export default function AdminDashboard() {
                   <td className="px-6 py-4 pl-8">
                     <div className="flex items-center gap-4">
                       <div className="relative w-11 h-11 rounded-2xl overflow-hidden shadow-sm border border-slate-100 shrink-0">
-                        <img src={getOptimizedUrl(profile.profileImage || PLACEHOLDER_IMAGE)} alt={profile.name} className="w-full h-full object-cover" loading="lazy" />
+                        <img src={getOptimizedUrl(profile.profileImage || PLACEHOLDER_IMAGE)} alt={profile.name} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                       </div>
                       <div>
                         <div className="flex items-center gap-1.5">
@@ -1609,7 +1609,7 @@ export default function AdminDashboard() {
                     <img 
                       src={getOptimizedUrl(newModel.coverPhoto ? URL.createObjectURL(newModel.coverPhoto) : (newModel.existingProfileImage || PLACEHOLDER_IMAGE))} 
                       alt="Profile" 
-                      className="w-full h-full object-cover" 
+                      className="absolute inset-0 w-full h-full object-cover" 
                       loading="lazy"
                     />
                     <label className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center cursor-pointer">
@@ -1627,7 +1627,7 @@ export default function AdminDashboard() {
                     {/* Existing Images */}
                     {newModel.existingGalleryImages.map((img, idx) => (
                       <div key={`existing-${idx}`} className="relative aspect-square rounded-xl overflow-hidden group">
-                        <img src={getOptimizedUrl(img || PLACEHOLDER_IMAGE)} alt="Gallery" className="w-full h-full object-cover" loading="lazy" />
+                        <img src={getOptimizedUrl(img || PLACEHOLDER_IMAGE)} alt="Gallery" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                         <button 
                           type="button"
                           onClick={() => setNewModel({...newModel, existingGalleryImages: newModel.existingGalleryImages.filter((_, i) => i !== idx)})}
@@ -1640,7 +1640,7 @@ export default function AdminDashboard() {
                     {/* New Uploads */}
                     {newModel.galleryPhotos.map((file, idx) => (
                       <div key={`new-${idx}`} className="relative aspect-square rounded-xl overflow-hidden group ring-2 ring-blue-600">
-                        <img src={getOptimizedUrl(URL.createObjectURL(file))} alt="Gallery" className="w-full h-full object-cover" loading="lazy" />
+                        <img src={getOptimizedUrl(URL.createObjectURL(file))} alt="Gallery" className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                         <button 
                           type="button"
                           onClick={() => setNewModel({...newModel, galleryPhotos: newModel.galleryPhotos.filter((_, i) => i !== idx)})}

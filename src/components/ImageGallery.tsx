@@ -31,7 +31,7 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
         <img 
           src={getOptimizedUrl(validImages[selectedIndex])}
           alt={`${altPrefix} - Image ${selectedIndex + 1}`}
-          className="w-full h-full object-cover object-top transition-all duration-500"
+          className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500"
         />
 
         {/* Featured Badge */}
@@ -78,7 +78,7 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
               <img 
                 src={getOptimizedUrl(img)}
                 alt={`${altPrefix} thumbnail ${idx + 1}`}
-                className="w-full h-full object-cover object-top"
+                className="absolute inset-0 w-full h-full object-cover object-top"
                 loading="lazy"
               />
             </button>

@@ -13,7 +13,7 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
           <img
             src={getOptimizedUrl(profile.profileImage)}
             alt={profile.name}
-            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+            className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
           />
           {/* Subtle Gradient Overlay for Typography Contrast - Blue Tinted */}
