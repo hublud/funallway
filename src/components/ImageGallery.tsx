@@ -11,16 +11,17 @@ interface ImageGalleryProps {
 }
 
 export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGalleryProps) {
+  const validImages = images?.filter(img => Boolean(img) && img.trim() !== '') || [];
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  if (!images || images.length === 0) return null;
+  if (validImages.length === 0) return null;
 
   const handlePrevious = () => {
-    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setSelectedIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setSelectedIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -28,7 +29,7 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
       {/* Main Image Stage - Reduced by 30% on mobile (w-full to w-[70%]) for better scroll experience */}
       <div className="relative aspect-[3/4] w-[70%] mx-auto sm:w-full rounded-2xl overflow-hidden bg-slate-100 shadow-md border border-slate-100 group">
         <img 
-          src={getOptimizedUrl(images[selectedIndex])}
+          src={getOptimizedUrl(validImages[selectedIndex])}
           alt={`${altPrefix} - Image ${selectedIndex + 1}`}
           className="w-full h-full object-cover object-top transition-all duration-500"
         />
@@ -42,7 +43,7 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
         )}
 
         {/* Navigation Arrows (Visible on hover or mobile) */}
-        {images.length > 1 && (
+        {validImages.length > 1 && (
           <>
             <button 
               onClick={handlePrevious}
@@ -61,9 +62,9 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
       </div>
 
       {/* Thumbnails Row */}
-      {images.length > 1 && (
+      {validImages.length > 1 && (
         <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none snap-x">
-          {images.map((img, idx) => (
+          {validImages.map((img, idx) => (
             <button
               key={idx}
               onClick={() => setSelectedIndex(idx)}
