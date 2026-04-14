@@ -42,7 +42,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
 
         <div className="flex flex-col md:flex-row gap-8 p-4 sm:p-8">
           {/* Left Column: Image Gallery */}
-          <div className="flex-1">
+          <div className="w-full md:w-[400px] lg:w-[480px] shrink-0">
             <ImageGallery 
               images={[profile.profileImage, ...profile.galleryImages]} 
               altPrefix={profile.name}
