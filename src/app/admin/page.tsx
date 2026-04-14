@@ -25,6 +25,7 @@ import {
   LogOut,
   Globe,
   Trash2,
+  MapPin as MapPinIcon,
 } from "lucide-react";
 import { NIGERIAN_STATES, WORLD_COUNTRIES } from "@/lib/states";
 import { createClient } from "@/utils/supabase/client";
