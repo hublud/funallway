@@ -107,14 +107,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-1C07YNN2WJ" strategy="afterInteractive" />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-07SCP4FD43" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
           
-            gtag('config', 'G-1C07YNN2WJ');
+            gtag('config', 'G-07SCP4FD43');
           `}
         </Script>
       </head>
