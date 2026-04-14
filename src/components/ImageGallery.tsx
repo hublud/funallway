@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { getOptimizedUrl } from "@/utils/cloudinary";
 
 interface ImageGalleryProps {
   images: string[];
@@ -27,13 +27,10 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
     <div className="flex flex-col gap-4 w-full">
       {/* Main Image Stage - Reduced by 30% on mobile (w-full to w-[70%]) for better scroll experience */}
       <div className="relative aspect-[3/4] w-[70%] mx-auto sm:w-full rounded-2xl overflow-hidden bg-slate-100 shadow-md border border-slate-100 group">
-        <Image 
-          src={images[selectedIndex]}
+        <img 
+          src={getOptimizedUrl(images[selectedIndex])}
           alt={`${altPrefix} - Image ${selectedIndex + 1}`}
-          fill
-          className="object-cover object-top transition-all duration-500"
-          priority
-          sizes="(max-width: 768px) 100vw, 50vw"
+          className="w-full h-full object-cover object-top transition-all duration-500"
         />
 
         {/* Featured Badge */}
@@ -77,12 +74,11 @@ export default function ImageGallery({ images, altPrefix, isFeatured }: ImageGal
                 }
               `}
             >
-              <Image 
-                src={img}
+              <img 
+                src={getOptimizedUrl(img)}
                 alt={`${altPrefix} thumbnail ${idx + 1}`}
-                fill
-                className="object-cover object-top"
-                sizes="80px"
+                className="w-full h-full object-cover object-top"
+                loading="lazy"
               />
             </button>
           ))}

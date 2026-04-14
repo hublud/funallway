@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Sparkles } from "lucide-react";
 import { Profile } from "@/lib/mockData";
+import { getOptimizedUrl } from "@/utils/cloudinary";
 
 export default function ProfileCard({ profile }: { profile: Profile }) {
   return (
@@ -10,12 +10,11 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
         
         {/* Image Section */}
         <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] bg-slate-50">
-          <Image
-            src={profile.profileImage}
+          <img
+            src={getOptimizedUrl(profile.profileImage)}
             alt={profile.name}
-            fill
-            className="object-cover object-top transition-transform duration-700 group-hover:scale-110"
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
           />
           {/* Subtle Gradient Overlay for Typography Contrast - Blue Tinted */}
           <div className="absolute inset-0 bg-gradient-to-t from-blue-950/90 via-blue-900/40 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />

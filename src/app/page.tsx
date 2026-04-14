@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Profile } from "@/lib/mockData";
 import ProfileCard from "@/components/ProfileCard";
 import { Filter, Search, X, MapPin, Sparkles, ChevronDown, Check, Globe, Map as MapIcon, Loader2 } from "lucide-react";
@@ -138,13 +137,12 @@ export default function Home() {
           {/* Advertise Banner */}
           <div className="mx-auto w-full max-w-2xl mb-2 animate-in fade-in slide-in-from-top-4 duration-700">
             <div className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-[0_8px_30px_rgba(0,0,0,0.1)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] transition-shadow duration-500">
-              <Image
+              <img
                 src="/images/homepage-ad.jpg"
                 alt="Advertise with us at Baddies212"
                 width={1200}
                 height={675}
                 className="w-full h-auto"
-                priority
               />
             </div>
           </div>
@@ -182,13 +180,12 @@ export default function Home() {
             <div className="relative group w-[95%] max-w-[350px] aspect-square sm:w-[300px] sm:h-[300px] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
               <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
               <div className="relative bg-white p-2 rounded-[2rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
-                <Image 
+                <img 
                   src="/images/home-banner.jpg" 
                   alt="Baddies212.com Banner" 
                   width={300}
                   height={300}
                   className="w-full h-full object-contain rounded-[1.5rem]"
-                  priority
                 />
               </div>
             </div>
@@ -197,13 +194,12 @@ export default function Home() {
             <div className="relative group w-[95%] max-w-[350px] aspect-square sm:w-[300px] sm:h-[300px] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
               <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
               <div className="relative bg-white p-2 rounded-[2rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
-                <Image 
+                <img 
                   src="/images/banner-extra-2.jpeg" 
                   alt="Baddies212.com Second Banner" 
                   width={300}
                   height={300}
                   className="w-full h-full object-cover rounded-[1.5rem]"
-                  priority
                 />
               </div>
             </div>
@@ -445,12 +441,13 @@ export default function Home() {
           <div className="relative group w-[95%] max-w-[350px] aspect-square sm:w-[300px] sm:h-[300px] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
             <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
             <div className="relative bg-white p-2 rounded-[2rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
-              <Image 
+              <img 
                 src="/images/bottom-banner.jpg" 
                 alt="Baddies212.com Promotional Banner" 
                 width={300}
                 height={300}
                 className="w-full h-full object-contain rounded-[1.5rem]"
+                loading="lazy"
               />
             </div>
           </div>
@@ -459,12 +456,13 @@ export default function Home() {
           <div className="relative group w-[95%] max-w-[350px] aspect-square sm:w-[300px] sm:h-[300px] animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
             <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-blue-400/10 rounded-[2rem] blur-xl group-hover:opacity-100 transition duration-1000 opacity-70"></div>
             <div className="relative bg-white p-2 rounded-[2rem] shadow-2xl border-4 border-white overflow-hidden h-full flex items-center justify-center">
-              <Image 
+              <img 
                 src="/images/banner-extra-1.jpeg" 
                 alt="Baddies212.com Second Promotional Banner" 
                 width={300}
                 height={300}
                 className="w-full h-full object-cover rounded-[1.5rem]"
+                loading="lazy"
               />
             </div>
           </div>

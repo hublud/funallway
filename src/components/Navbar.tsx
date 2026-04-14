@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Search, User, Home as HomeIcon, LayoutDashboard } from "lucide-react";
@@ -32,12 +31,11 @@ export default function Navbar() {
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="relative">
                 <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600 to-blue-400 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                <Image 
+                <img 
                   src="/logo.png" 
                   alt="Logo" 
                   width={38}
                   height={38}
-                  priority
                   className="relative w-9 h-9 object-contain"
                 />
               </div>
