@@ -7,6 +7,7 @@ import ProfileCard from "@/components/ProfileCard";
 import { Filter, Search, X, MapPin, Sparkles, ChevronDown, Check, Globe, Map as MapIcon, Loader2 } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
 import { NIGERIAN_STATES, WORLD_COUNTRIES } from "@/lib/states";
+import { getPlatformSettings, PlatformSettings } from "@/utils/pricing";
 
 export default function Home() {
   const supabase = createClient();
@@ -20,6 +21,7 @@ export default function Home() {
   const [showFilters, setShowFilters] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [customLocations, setCustomLocations] = useState<{name: string, type: string}[]>([]);
+  const [platformSettings, setPlatformSettings] = useState<PlatformSettings | null>(null);
   const ITEMS_PER_PAGE = 50;
 
   useEffect(() => {
@@ -57,8 +59,14 @@ export default function Home() {
       if (data) setCustomLocations(data);
     }
 
+    async function fetchSettings() {
+      const settings = await getPlatformSettings();
+      setPlatformSettings(settings);
+    }
+
     fetchProfiles();
     fetchLocations();
+    fetchSettings();
   }, []);
 
   const toggleState = (state: string) => {
@@ -203,6 +211,25 @@ export default function Home() {
                 />
               </div>
             </div>
+          </div>
+
+          {/* New Advertisement Banner */}
+          <div className="mt-12 space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700">
+            <div className="mx-auto w-full max-w-md px-4">
+              <div className="relative group rounded-2xl overflow-hidden border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500">
+                <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                <img
+                  src={platformSettings?.header_ad_url || "/images/advertisement-fun.jpg"}
+                  alt="Special Advertisement"
+                  width={800}
+                  height={1000}
+                  className="w-full h-auto max-h-[500px] object-contain transform hover:scale-[1.01] transition-transform duration-700"
+                />
+              </div>
+            </div>
+            <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] animate-pulse">
+              {platformSettings?.header_ad_caption || "Place Your Adverts Here"}
+            </p>
           </div>
         </div>
       </div>
@@ -466,6 +493,25 @@ export default function Home() {
               />
             </div>
           </div>
+        </div>
+
+        {/* Dynamic Bottom Advertisement Banner */}
+        <div className="mt-12 text-center space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
+          <div className="mx-auto w-full max-w-md px-4">
+            <div className="relative group rounded-2xl overflow-hidden border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500">
+              <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+              <img
+                src={platformSettings?.footer_ad_url || "/images/bottom-banner.jpg"}
+                alt="Footer Advertisement"
+                width={800}
+                height={1000}
+                className="w-full h-auto max-h-[500px] object-contain transform hover:scale-[1.01] transition-transform duration-700"
+              />
+            </div>
+          </div>
+          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] animate-pulse">
+            {platformSettings?.footer_ad_caption || "Place Your Adverts Here"}
+          </p>
         </div>
       </div>
     </div>

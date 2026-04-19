@@ -62,7 +62,11 @@ export default function AdminDashboard() {
       setPlatformSettings({
         weeklySubPrice: settings.weekly_sub_price,
         monthlySubPrice: settings.monthly_sub_price,
-        connectionFee: settings.connection_fee
+        connectionFee: settings.connection_fee,
+        headerAdUrl: settings.header_ad_url || "/images/advertisement-fun.jpg",
+        headerAdCaption: settings.header_ad_caption || "Place Your Adverts Here",
+        footerAdUrl: settings.footer_ad_url || "/images/bottom-banner.jpg",
+        footerAdCaption: settings.footer_ad_caption || "Place Your Adverts Here"
       });
 
       // Fetch transactions
@@ -128,7 +132,11 @@ export default function AdminDashboard() {
   const [platformSettings, setPlatformSettings] = useState({
     weeklySubPrice: 15000,
     monthlySubPrice: 45000,
-    connectionFee: 5000
+    connectionFee: 5000,
+    headerAdUrl: "/images/advertisement-fun.jpg",
+    headerAdCaption: "Place Your Adverts Here",
+    footerAdUrl: "/images/bottom-banner.jpg",
+    footerAdCaption: "Place Your Adverts Here"
   });
   const [isSavingSettings, setIsSavingSettings] = useState(false);
 
@@ -1753,7 +1761,7 @@ export default function AdminDashboard() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setIsSettingsOpen(false)} />
           
-          <div className="relative bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300">
+          <div className="relative bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
             <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-white sticky top-0 z-10">
               <div>
                 <h2 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
@@ -1767,7 +1775,58 @@ export default function AdminDashboard() {
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-6 space-y-6 overflow-y-auto flex-1 custom-scrollbar">
+                <div className="pb-4 border-b border-slate-100 space-y-4">
+                  <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2">Header Advertisement Banner</h3>
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Image URL</label>
+                    <input 
+                      type="text" 
+                      value={platformSettings.headerAdUrl}
+                      onChange={(e) => setPlatformSettings({...platformSettings, headerAdUrl: e.target.value})}
+                      placeholder="e.g. /images/advert.jpg or https://..."
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Caption Text</label>
+                    <input 
+                      type="text" 
+                      value={platformSettings.headerAdCaption}
+                      onChange={(e) => setPlatformSettings({...platformSettings, headerAdCaption: e.target.value})}
+                      placeholder="e.g. Place Your Adverts Here"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                    />
+                  </div>
+                </div>
+
+                <div className="pb-4 border-b border-slate-100 space-y-4">
+                  <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-2">Bottom Advertisement Banner</h3>
+                  
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Image URL</label>
+                    <input 
+                      type="text" 
+                      value={platformSettings.footerAdUrl}
+                      onChange={(e) => setPlatformSettings({...platformSettings, footerAdUrl: e.target.value})}
+                      placeholder="e.g. /images/bottom.jpg or https://..."
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest ml-1">Caption Text</label>
+                    <input 
+                      type="text" 
+                      value={platformSettings.footerAdCaption}
+                      onChange={(e) => setPlatformSettings({...platformSettings, footerAdCaption: e.target.value})}
+                      placeholder="e.g. Place Your Adverts Here"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                    />
+                  </div>
+                </div>
               <div className="space-y-4">
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Weekly Subscription (₦)</label>
@@ -1807,6 +1866,7 @@ export default function AdminDashboard() {
                     />
                   </div>
                 </div>
+
 
                 <div className="pt-4 border-t border-slate-100">
                   <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-4 flex items-center gap-2">
@@ -1886,6 +1946,10 @@ export default function AdminDashboard() {
                         weekly_sub_price: platformSettings.weeklySubPrice,
                         monthly_sub_price: platformSettings.monthlySubPrice,
                         connection_fee: platformSettings.connectionFee,
+                        header_ad_url: platformSettings.headerAdUrl,
+                        header_ad_caption: platformSettings.headerAdCaption,
+                        footer_ad_url: platformSettings.footerAdUrl,
+                        footer_ad_caption: platformSettings.footerAdCaption,
                         updated_at: new Date().toISOString()
                       });
 
