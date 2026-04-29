@@ -147,10 +147,22 @@ export default function AuthHub() {
               <p className="text-sm text-blue-50 leading-relaxed mb-3">
                 Registration is only for escorts. If you want to get the services of an escort, you do not need to create an account and can connect with an escort on the escort discovery page.
               </p>
-              <p className="text-sm text-yellow-100 leading-relaxed font-semibold bg-black/20 p-3 rounded-lg border border-white/10 flex items-start gap-2">
+              <p className="text-sm text-yellow-100 leading-relaxed font-semibold bg-black/20 p-3 rounded-lg border border-white/10 flex items-start gap-2 mb-3">
                 <span>⚠️</span> 
                 <span>Models must cover their faces with an emoji, sticker, or blur their faces before uploading any public images to the platform.</span>
               </p>
+              
+              <div className="text-sm text-amber-50 leading-relaxed font-semibold bg-black/30 p-4 rounded-xl border border-amber-500/30">
+                <h4 className="font-bold flex items-center gap-2 mb-2 text-amber-400">
+                  <span className="flex-shrink-0 w-5 h-5 bg-amber-400/20 rounded-full flex items-center justify-center text-xs">🛡️</span>
+                  Safety Guidelines
+                </h4>
+                <ul className="list-decimal pl-5 space-y-1.5 opacity-90 text-[13px]">
+                  <li>Ensure you collect your transport before going.</li>
+                  <li>Ensure you meet up in a known hotel.</li>
+                  <li>Ensure you collect the agreed amount before any transaction.</li>
+                </ul>
+              </div>
             </div>
 
             <Link 

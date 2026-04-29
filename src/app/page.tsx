@@ -213,18 +213,33 @@ export default function Home() {
             </div>
           </div>
 
-          {/* New Advertisement Banner */}
+          {/* Advertisement Banners */}
           <div className="mt-12 space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-700">
-            <div className="mx-auto w-full max-w-md px-4">
-              <div className="relative group rounded-2xl overflow-hidden border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500">
-                <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                <img
-                  src={platformSettings?.header_ad_url || "/images/advertisement-fun.jpg"}
-                  alt="Special Advertisement"
-                  width={800}
-                  height={1000}
-                  className="w-full h-auto max-h-[500px] object-contain transform hover:scale-[1.01] transition-transform duration-700"
-                />
+            <div className="mx-auto w-full max-w-4xl px-4">
+              <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch">
+                {/* Ad 1 */}
+                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 w-full md:w-1/2 flex bg-white">
+                  <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 z-10 pointer-events-none"></div>
+                  <img
+                    src={platformSettings?.header_ad_url || "/images/advertisement-fun.jpg"}
+                    alt="Special Advertisement 1"
+                    width={800}
+                    height={1000}
+                    className="w-full h-auto object-contain transform hover:scale-[1.01] transition-transform duration-700"
+                  />
+                </div>
+                
+                {/* Ad 2 */}
+                <div className="relative group rounded-2xl overflow-hidden border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 w-full md:w-1/2 flex bg-white">
+                  <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 z-10 pointer-events-none"></div>
+                  <img
+                    src="https://res.cloudinary.com/datbno9up/image/upload/v1777450631/WhatsApp_Image_2026-04-22_at_18.53.48_jc7p1w.jpg"
+                    alt="Special Advertisement 2"
+                    width={800}
+                    height={1000}
+                    className="w-full h-auto object-contain transform hover:scale-[1.01] transition-transform duration-700"
+                  />
+                </div>
               </div>
             </div>
             <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] animate-pulse">
@@ -497,16 +512,31 @@ export default function Home() {
 
         {/* Dynamic Bottom Advertisement Banner */}
         <div className="mt-12 text-center space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500">
-          <div className="mx-auto w-full max-w-md px-4">
-            <div className="relative group rounded-2xl overflow-hidden border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500">
-              <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
-              <img
-                src={platformSettings?.footer_ad_url || "/images/bottom-banner.jpg"}
-                alt="Footer Advertisement"
-                width={800}
-                height={1000}
-                className="w-full h-auto max-h-[500px] object-contain transform hover:scale-[1.01] transition-transform duration-700"
-              />
+          <div className="mx-auto w-full max-w-4xl px-4">
+            <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch">
+              {/* Ad 1 */}
+              <div className="relative group rounded-2xl overflow-hidden border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 w-full md:w-1/2 flex bg-white">
+                <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 z-10 pointer-events-none"></div>
+                <img
+                  src={platformSettings?.footer_ad_url || "/images/bottom-banner.jpg"}
+                  alt="Footer Advertisement 1"
+                  width={800}
+                  height={1000}
+                  className="w-full h-auto object-contain transform hover:scale-[1.01] transition-transform duration-700"
+                />
+              </div>
+              
+              {/* Ad 2 */}
+              <div className="relative group rounded-2xl overflow-hidden border border-slate-200 shadow-[0_15px_40px_rgba(0,0,0,0.1)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] transition-all duration-500 w-full md:w-1/2 flex bg-white">
+                <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 z-10 pointer-events-none"></div>
+                <img
+                  src="https://res.cloudinary.com/datbno9up/image/upload/v1777450456/advert_zstzs7.jpg"
+                  alt="Footer Advertisement 2"
+                  width={800}
+                  height={1000}
+                  className="w-full h-auto object-contain transform hover:scale-[1.01] transition-transform duration-700"
+                />
+              </div>
             </div>
           </div>
           <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] animate-pulse">

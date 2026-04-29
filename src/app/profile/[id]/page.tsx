@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
-import { MapPin, ChevronLeft, Sparkles } from "lucide-react";
+import { MapPin, ChevronLeft, Sparkles, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import ProfileClientActions from "@/components/ProfileClientActions";
+import ProfileTopActions from "@/components/ProfileTopActions";
 import ImageGallery from "@/components/ImageGallery";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
@@ -52,10 +53,30 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
 
           {/* Right Column: Info & Actions */}
           <div className="flex-1 flex flex-col pt-2 md:pt-8 md:pl-4">
+            
+            {/* Safety Tips Banner */}
+            <div className="mb-6 bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 text-amber-900 shadow-sm">
+              <h4 className="font-black uppercase tracking-wider flex items-center gap-2 mb-3 text-sm">
+                <span className="flex items-center justify-center bg-amber-200 text-amber-700 w-6 h-6 rounded-full text-xs">⚠️</span>
+                Safety Tips & Warnings
+              </h4>
+              <ul className="list-decimal pl-5 space-y-2 font-semibold text-sm opacity-90">
+                <li>Ensure you collect your transport before going.</li>
+                <li>Ensure you meet up in a known hotel.</li>
+                <li>Ensure you collect the agreed amount before any transaction.</li>
+              </ul>
+            </div>
+
             <div className="mb-6">
-              <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 flex flex-wrap items-baseline gap-3">
-                {profile.name} <span className="text-2xl sm:text-3xl text-slate-400 font-medium">{profile.age}</span>
-              </h1>
+              <div className="flex items-center gap-2 mb-1">
+                <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 flex flex-wrap items-baseline gap-2">
+                  {profile.name} <span className="text-2xl sm:text-3xl text-slate-400 font-medium mr-1">{profile.age}</span>
+                </h1>
+
+              </div>
+              
+              <ProfileTopActions whatsappNumber={profile.whatsappNumber} profileId={profile.id} />
+
               <div className="flex flex-col gap-2 mt-3">
                 <div className="flex items-center gap-2 text-slate-500 text-lg">
                   <MapPin className="w-5 h-5" />
@@ -153,13 +174,6 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
             <div className="mt-auto">
               <div className="hidden sm:block">
                 <ProfileClientActions profile={profile} />
-              </div>
-              
-              <div className="mt-6 p-4 bg-blue-50/50 rounded-xl border border-blue-100/50 text-sm text-slate-600 flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-blue-100 flex-shrink-0 flex items-center justify-center text-blue-600 font-bold text-xs mt-0.5">!</div>
-                <p>
-                  Connecting reveals direct WhatsApp contact. Ensure you conduct all communications respectfully according to our platform guidelines.
-                </p>
               </div>
 
               {/* Mobile-only CTA callout with arrow */}
