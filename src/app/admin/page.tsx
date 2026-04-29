@@ -1939,21 +1939,22 @@ export default function AdminDashboard() {
                 onClick={async () => {
                   setIsSavingSettings(true);
                   try {
-                    const { error } = await supabase
-                      .from("platform_settings")
-                      .upsert({
-                        id: "global",
+                    const response = await fetch('/api/admin/update-settings', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
                         weekly_sub_price: platformSettings.weeklySubPrice,
                         monthly_sub_price: platformSettings.monthlySubPrice,
                         connection_fee: platformSettings.connectionFee,
                         header_ad_url: platformSettings.headerAdUrl,
                         header_ad_caption: platformSettings.headerAdCaption,
                         footer_ad_url: platformSettings.footerAdUrl,
-                        footer_ad_caption: platformSettings.footerAdCaption,
-                        updated_at: new Date().toISOString()
-                      });
+                        footer_ad_caption: platformSettings.footerAdCaption
+                      })
+                    });
 
-                    if (error) throw error;
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.error || "Failed to save settings");
                     
                     setIsSettingsOpen(false);
                     alert("Platform settings saved successfully!");

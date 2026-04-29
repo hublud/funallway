@@ -1,16 +1,13 @@
 "use client";
 
-import { Profile } from "@/lib/mockData";
+import { formatWhatsAppNumber } from "@/utils/whatsapp";
 
 export default function ProfileClientActions({ profile }: { profile: Profile }) {
   const waText = encodeURIComponent(
     `Hello ${profile.name}, I found your profile on Baddies212 and would like to connect!`
   );
   
-  let safeNum = (profile.whatsappNumber || "234").replace(/\D/g, "");
-  if (safeNum.startsWith("0")) {
-    safeNum = "234" + safeNum.substring(1);
-  }
+  const safeNum = formatWhatsAppNumber(profile.whatsappNumber);
   
   const url = `https://wa.me/${safeNum}?text=${waText}`;
 
