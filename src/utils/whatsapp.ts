@@ -10,7 +10,26 @@ export function formatWhatsAppNumber(number: string | undefined): string {
     clean = "234" + clean.substring(1);
   }
   
+  // If it starts with 234 but has + at the beginning, we already removed it with \D
+  
   return clean;
+}
+
+export function formatPhoneNumberForDb(number: string | undefined): string {
+  if (!number) return "";
+  
+  let clean = number.replace(/\D/g, "");
+  
+  if (clean.startsWith("0")) {
+    return "+234" + clean.substring(1);
+  }
+  
+  if (clean.startsWith("234")) {
+    return "+" + clean;
+  }
+  
+  // If it's already in international format but missing +
+  return "+" + clean;
 }
 
 export function formatWhatsAppDisplay(number: string | undefined): string {

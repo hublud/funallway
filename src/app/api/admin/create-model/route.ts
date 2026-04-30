@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/utils/supabase/admin';
+import { formatPhoneNumberForDb } from '@/utils/whatsapp';
 
 export async function POST(req: Request) {
   try {
@@ -66,7 +67,7 @@ export async function POST(req: Request) {
       subscription_expires_at: expiresAt.toISOString(),
       plan,
       bio,
-      whatsapp_number: whatsappNumber,
+      whatsapp_number: formatPhoneNumberForDb(whatsappNumber),
       can_travel_to: canTravelTo || [],
       rates,
       interests

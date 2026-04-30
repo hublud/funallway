@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/utils/supabase/admin';
+import { formatPhoneNumberForDb } from '@/utils/whatsapp';
 
 export async function POST(req: Request) {
   try {

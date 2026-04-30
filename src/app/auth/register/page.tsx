@@ -184,6 +184,10 @@ export default function RegisterWizard() {
         : platformSettings.monthly_sub_price * 100; // in kobo
       const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
 
+      if (!(window as any).PaystackPop) {
+        throw new Error("Payment gateway is still loading. Please wait a moment and try again.");
+      }
+
       const handler = (window as any).PaystackPop.setup({
         key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
         email: formData.email,

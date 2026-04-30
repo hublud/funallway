@@ -8,6 +8,7 @@ import { NIGERIAN_STATES, WORLD_COUNTRIES } from "@/lib/states";
 import FilePreview from "@/components/FilePreview";
 import { createClient } from "@/utils/supabase/client";
 import { getPlatformSettings, type PlatformSettings, DEFAULT_SETTINGS } from "@/utils/pricing";
+import { formatPhoneNumberForDb } from "@/utils/whatsapp";
 import Link from "next/link";
 
 type Tab = "profile" | "services" | "rates" | "media" | "security" | "subscription";
@@ -188,7 +189,7 @@ function DashboardContent() {
           gender: formData.gender,
           location_type: formData.locationType,
           state: formData.baseState,
-          whatsapp_number: formData.whatsapp,
+          whatsapp_number: formatPhoneNumberForDb(formData.whatsapp),
           bio: formData.bio,
           can_travel_to: formData.travelStates,
           rates: formData.rates,
@@ -224,6 +225,11 @@ function DashboardContent() {
       ? platformSettings.weekly_sub_price * 100 
       : platformSettings.monthly_sub_price * 100; // in kobo
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
+
+    if (!(window as any).PaystackPop) {
+      alert("Payment gateway is still loading. Please wait a moment and try again.");
+      return;
+    }
 
     const handler = (window as any).PaystackPop.setup({
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,

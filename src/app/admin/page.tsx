@@ -31,6 +31,7 @@ import { NIGERIAN_STATES, WORLD_COUNTRIES } from "@/lib/states";
 import { createClient } from "@/utils/supabase/client";
 import { getPlatformSettings, type PlatformSettings } from "@/utils/pricing";
 import { getOptimizedUrl } from "@/utils/cloudinary";
+import { formatPhoneNumberForDb } from "@/utils/whatsapp";
 
 const PLACEHOLDER_IMAGE = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop";
 
@@ -282,7 +283,7 @@ export default function AdminDashboard() {
         state: newModel.state,
         location_type: newModel.locationType,
         gender: newModel.gender,
-        whatsapp_number: newModel.whatsapp,
+        whatsapp_number: formatPhoneNumberForDb(newModel.whatsapp),
         bio: newModel.bio,
         plan: newModel.plan,
         profile_image: profileImageUrl,
