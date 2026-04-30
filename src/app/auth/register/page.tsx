@@ -65,6 +65,18 @@ export default function RegisterWizard() {
   const [subPlan, setSubPlan] = useState<"weekly" | "monthly" | null>(null);
   const [isPaying, setIsPaying] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [paystackLoaded, setPaystackLoaded] = useState(false);
+
+  useEffect(() => {
+    const checkPaystack = () => {
+      if ((window as any).PaystackPop) {
+        setPaystackLoaded(true);
+      }
+    };
+    checkPaystack();
+    const interval = setInterval(checkPaystack, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Search State for Step 2
   const [stateSearch, setStateSearch] = useState("");
@@ -185,7 +197,9 @@ export default function RegisterWizard() {
       const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
 
       if (!(window as any).PaystackPop) {
-        throw new Error("Payment gateway is still loading. Please wait a moment and try again.");
+        setErrorMessage("Payment gateway failed to load. This might be due to your network or an ad-blocker. Please refresh the page or try a different browser.");
+        setIsPaying(false);
+        return;
       }
 
       const handler = (window as any).PaystackPop.setup({

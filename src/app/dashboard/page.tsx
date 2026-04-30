@@ -102,6 +102,18 @@ function DashboardContent() {
   const [userId, setUserId] = useState<string | null>(null);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [platformSettings, setPlatformSettings] = useState<PlatformSettings>(DEFAULT_SETTINGS);
+  const [paystackLoaded, setPaystackLoaded] = useState(false);
+
+  useEffect(() => {
+    const checkPaystack = () => {
+      if ((window as any).PaystackPop) {
+        setPaystackLoaded(true);
+      }
+    };
+    checkPaystack();
+    const interval = setInterval(checkPaystack, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const daysRemaining = expiresAt ? Math.max(0, Math.ceil((new Date(expiresAt).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))) : 0;
   const isExpired = expiresAt ? new Date(expiresAt) < new Date() : false;
@@ -227,7 +239,7 @@ function DashboardContent() {
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
 
     if (!(window as any).PaystackPop) {
-      alert("Payment gateway is still loading. Please wait a moment and try again.");
+      alert("Payment gateway failed to load. This might be due to your network or an ad-blocker. Please refresh the page or try a different browser.");
       return;
     }
 
