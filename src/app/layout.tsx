@@ -107,7 +107,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
-        <Script src="https://js.paystack.co/v1/inline.js" strategy="afterInteractive" />
+        <Script src="https://js.paystack.co/v1/inline.js" strategy="beforeInteractive" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-07SCP4FD43" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
