@@ -1,6 +1,7 @@
 "use client";
 
 import { formatWhatsAppNumber } from "@/utils/whatsapp";
+import { Profile } from "@/lib/mockData";
 
 export default function ProfileClientActions({ profile }: { profile: Profile }) {
   const waText = encodeURIComponent(
