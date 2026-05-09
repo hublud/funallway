@@ -106,8 +106,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} h-full antialiased`} suppressHydrationWarning>
-      <head>
-        <Script src="https://js.paystack.co/v1/inline.js" strategy="beforeInteractive" />
+      <head />
+      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900" suppressHydrationWarning>
+        <Navbar />
+        <main className="flex-1 flex flex-col pb-16 sm:pb-0">{children}</main>
+        <Footer />
+
+        <Script src="https://js.paystack.co/v1/inline.js" strategy="afterInteractive" />
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-07SCP4FD43" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
@@ -118,11 +123,6 @@ export default function RootLayout({
             gtag('config', 'G-07SCP4FD43');
           `}
         </Script>
-      </head>
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 selection:text-blue-900" suppressHydrationWarning>
-        <Navbar />
-        <main className="flex-1 flex flex-col pb-16 sm:pb-0">{children}</main>
-        <Footer />
       </body>
     </html>
   );

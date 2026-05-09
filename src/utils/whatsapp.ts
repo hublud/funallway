@@ -18,7 +18,7 @@ export function formatWhatsAppNumber(number: string | undefined): string {
 export function formatPhoneNumberForDb(number: string | undefined): string {
   if (!number) return "";
   
-  let clean = number.replace(/\D/g, "");
+  const clean = number.replace(/\D/g, "");
   
   if (clean.startsWith("0")) {
     return "+234" + clean.substring(1);
@@ -35,7 +35,7 @@ export function formatPhoneNumberForDb(number: string | undefined): string {
 export function formatWhatsAppDisplay(number: string | undefined): string {
   if (!number) return "+234";
   
-  let clean = number.replace(/\D/g, "");
+  const clean = number.replace(/\D/g, "");
   
   if (clean.startsWith("0")) {
     return "+234 " + clean.substring(1);

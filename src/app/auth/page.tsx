@@ -78,7 +78,7 @@ export default function AuthHub() {
               </div>
             )}
             
-            <div>
+            <div suppressHydrationWarning>
               <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
               <input 
                 type="email" 
@@ -89,9 +89,9 @@ export default function AuthHub() {
                 placeholder="Enter your email" 
               />
             </div>
-            <div>
+            <div suppressHydrationWarning>
               <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
-              <div className="relative">
+              <div className="relative" suppressHydrationWarning>
                 <input 
                   type={showPassword ? "text" : "password"} 
                   required

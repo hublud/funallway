@@ -161,7 +161,7 @@ export default function RegisterWizard() {
 
       // 3. Now that the user is authenticated, we upload their images natively to bypass platform payload limits
       let profileImageUrl = "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&auto=format&fit=crop";
-      let galleryImageUrls: string[] = [];
+      const galleryImageUrls: string[] = [];
 
       try {
         if (coverPhoto) {
@@ -259,7 +259,7 @@ export default function RegisterWizard() {
               <p className="text-slate-500 mb-8">Set up your escort identity and base location.</p>
               
               <div className="space-y-5">
-                <div>
+                <div suppressHydrationWarning>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Username</label>
                   <input 
                     type="text" 
@@ -269,7 +269,7 @@ export default function RegisterWizard() {
                     placeholder="E.g. AmaraBaby" 
                   />
                 </div>
-                <div>
+                <div suppressHydrationWarning>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Email Address</label>
                   <input 
                     type="email" 
@@ -279,7 +279,7 @@ export default function RegisterWizard() {
                     placeholder="you@example.com" 
                   />
                 </div>
-                <div>
+                <div suppressHydrationWarning>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Short Bio</label>
                   <textarea 
                     value={formData.bio}
@@ -289,7 +289,7 @@ export default function RegisterWizard() {
                     rows={3}
                   />
                 </div>
-                <div>
+                <div suppressHydrationWarning>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Age</label>
                   <input 
                     type="number" 
@@ -321,9 +321,9 @@ export default function RegisterWizard() {
                     </button>
                   </div>
                 </div>
-                <div>
+                <div suppressHydrationWarning>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">Password</label>
-                  <div className="relative">
+                  <div className="relative" suppressHydrationWarning>
                     <input 
                       type={showPassword ? "text" : "password"} 
                       value={formData.password}
@@ -374,7 +374,7 @@ export default function RegisterWizard() {
                     </select>
                   </div>
                 </div>
-                <div>
+                <div suppressHydrationWarning>
                   <label className="block text-sm font-medium text-slate-700 mb-1 ml-1">WhatsApp Number</label>
                   <input 
                     type="tel" 

@@ -11,7 +11,8 @@ export async function POST(req: Request) {
       header_ad_url, 
       header_ad_caption, 
       footer_ad_url, 
-      footer_ad_caption 
+      footer_ad_caption,
+      slider_items
     } = body;
 
     const supabase = createAdminClient();
@@ -27,6 +28,7 @@ export async function POST(req: Request) {
         header_ad_caption,
         footer_ad_url,
         footer_ad_caption,
+        slider_items,
         updated_at: new Date().toISOString()
       });
 

@@ -1,5 +1,11 @@
 import { createClient } from "@/utils/supabase/client";
 
+export interface SliderItem {
+  type: "image" | "video";
+  url: string;
+  title?: string;
+}
+
 export interface PlatformSettings {
   weekly_sub_price: number;
   monthly_sub_price: number;
@@ -8,6 +14,7 @@ export interface PlatformSettings {
   header_ad_caption?: string;
   footer_ad_url?: string;
   footer_ad_caption?: string;
+  slider_items?: SliderItem[];
 }
 
 export const DEFAULT_SETTINGS: PlatformSettings = {
@@ -17,7 +24,8 @@ export const DEFAULT_SETTINGS: PlatformSettings = {
   header_ad_url: "/images/advertisement-fun.jpg",
   header_ad_caption: "Place Your Adverts Here",
   footer_ad_url: "/images/bottom-banner.jpg",
-  footer_ad_caption: "Place Your Adverts Here"
+  footer_ad_caption: "Place Your Adverts Here",
+  slider_items: []
 };
 
 /**
@@ -30,7 +38,7 @@ export async function getPlatformSettings(): Promise<PlatformSettings> {
   try {
     const { data, error } = await supabase
       .from("platform_settings")
-      .select("weekly_sub_price, monthly_sub_price, connection_fee, header_ad_url, header_ad_caption, footer_ad_url, footer_ad_caption")
+      .select("weekly_sub_price, monthly_sub_price, connection_fee, header_ad_url, header_ad_caption, footer_ad_url, footer_ad_caption, slider_items")
       .eq("id", "global")
       .single();
 

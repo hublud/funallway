@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 
     // 2. Calculate subscription expiry
     const now = new Date();
-    let expiresAt = new Date();
+    const expiresAt = new Date();
     if (plan === 'weekly') {
       expiresAt.setDate(now.getDate() + 7);
     } else {

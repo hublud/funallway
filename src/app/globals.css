@@ -48,3 +48,12 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans), sans-serif;
 }
+
+@keyframes progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+.slider-progress {
+  animation: progress linear forwards;
+}

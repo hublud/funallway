@@ -26,10 +26,12 @@ import {
   Globe,
   Trash2,
   MapPin as MapPinIcon,
+  ChevronUp,
+  ChevronDown
 } from "lucide-react";
 import { NIGERIAN_STATES, WORLD_COUNTRIES } from "@/lib/states";
 import { createClient } from "@/utils/supabase/client";
-import { getPlatformSettings, type PlatformSettings } from "@/utils/pricing";
+import { getPlatformSettings, type PlatformSettings, type SliderItem } from "@/utils/pricing";
 import { getOptimizedUrl } from "@/utils/cloudinary";
 import { formatPhoneNumberForDb } from "@/utils/whatsapp";
 
@@ -69,6 +71,7 @@ export default function AdminDashboard() {
         footerAdUrl: settings.footer_ad_url || "/images/bottom-banner.jpg",
         footerAdCaption: settings.footer_ad_caption || "Place Your Adverts Here"
       });
+      if (settings.slider_items) setSliderItems(settings.slider_items);
 
       // Fetch transactions
       const { data: txData } = await supabase
@@ -139,7 +142,22 @@ export default function AdminDashboard() {
     footerAdUrl: "/images/bottom-banner.jpg",
     footerAdCaption: "Place Your Adverts Here"
   });
+  const [sliderItems, setSliderItems] = useState<SliderItem[]>([]);
+  const [newSliderUrl, setNewSliderUrl] = useState("");
+  const [newSliderType, setNewSliderType] = useState<"image" | "video">("image");
+  const [newSliderTitle, setNewSliderTitle] = useState("");
+  const [newSliderFile, setNewSliderFile] = useState<File | null>(null);
+  const [isUploadingSlider, setIsUploadingSlider] = useState(false);
   const [isSavingSettings, setIsSavingSettings] = useState(false);
+  
+  const moveSliderItem = (idx: number, direction: 'up' | 'down') => {
+    const newItems = [...sliderItems];
+    const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (targetIdx < 0 || targetIdx >= newItems.length) return;
+    
+    [newItems[idx], newItems[targetIdx]] = [newItems[targetIdx], newItems[idx]];
+    setSliderItems(newItems);
+  };
 
   const [customLocations, setCustomLocations] = useState<any[]>([]);
   const [newLocName, setNewLocName] = useState("");
@@ -252,7 +270,7 @@ export default function AdminDashboard() {
 
     try {
       let profileImageUrl = newModel.existingProfileImage;
-      let galleryImageUrls = [...newModel.existingGalleryImages];
+      const galleryImageUrls = [...newModel.existingGalleryImages];
 
       if (newModel.coverPhoto) {
         const fileExt = newModel.coverPhoto.name.split('.').pop();
@@ -336,7 +354,7 @@ export default function AdminDashboard() {
 
     try {
       let profileImageUrl = "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&auto=format&fit=crop";
-      let galleryImageUrls: string[] = [];
+      const galleryImageUrls: string[] = [];
 
       if (newModel.coverPhoto) {
         const fileExt = newModel.coverPhoto.name.split('.').pop();
@@ -1935,7 +1953,189 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              <button 
+              {/* ====== AD SLIDER MANAGEMENT ====== */}
+              <div className="pb-4 border-b border-slate-100 space-y-4">
+                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-1.5">
+                  <ImageIcon className="w-3 h-3 text-blue-500" />
+                  Ad Slider — Cloudinary Media
+                </h3>
+                <p className="text-[10px] text-slate-400 ml-1">Paste Cloudinary image or video URLs. They will auto-slide on the homepage above the escorts.</p>
+
+                {/* Add new slider item */}
+                <div className="bg-slate-50 rounded-2xl border border-slate-200 p-4 space-y-3">
+                  {/* Type Toggle */}
+                  <div className="flex gap-2 p-1 bg-white rounded-xl border border-slate-200">
+                    <button
+                      type="button"
+                      onClick={() => setNewSliderType("image")}
+                      className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
+                        newSliderType === "image" ? "bg-blue-600 text-white shadow-sm" : "text-slate-500 hover:bg-slate-50"
+                      }`}
+                    >
+                      🖼 Image
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewSliderType("video")}
+                      className={`flex-1 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
+                        newSliderType === "video" ? "bg-blue-600 text-white shadow-sm" : "text-slate-500 hover:bg-slate-50"
+                      }`}
+                    >
+                      🎬 Video
+                    </button>
+                  </div>
+
+                  <input
+                    type="text"
+                    placeholder="Cloudinary URL (e.g. https://res.cloudinary.com/...)"
+                    value={newSliderUrl}
+                    onChange={(e) => setNewSliderUrl(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Optional title label"
+                    value={newSliderTitle}
+                    onChange={(e) => setNewSliderTitle(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  />
+
+                  <div className="space-y-2">
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Add via File or URL</p>
+                    <div className="grid grid-cols-1 gap-3">
+                      <label className="flex flex-col items-center justify-center w-full py-4 border-2 border-slate-300 border-dashed rounded-2xl cursor-pointer bg-white hover:bg-slate-50 transition active:bg-blue-50">
+                        <div className="flex items-center gap-2">
+                          <UploadCloud className="w-5 h-5 text-slate-400" />
+                          <span className="text-xs font-bold text-slate-600">
+                            {newSliderFile ? newSliderFile.name : `Select ${newSliderType}`}
+                          </span>
+                        </div>
+                        <input 
+                          type="file" 
+                          className="hidden" 
+                          accept={newSliderType === "image" ? "image/*" : "video/*"}
+                          onChange={(e) => {
+                            if (e.target.files && e.target.files.length > 0) {
+                              setNewSliderFile(e.target.files[0]);
+                              setNewSliderUrl(""); // Clear URL if file is picked
+                            }
+                          }}
+                        />
+                      </label>
+                      
+                      <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <Globe className="w-3.5 h-3.5 text-slate-400" />
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="...or paste a Cloudinary/External URL"
+                          value={newSliderUrl}
+                          onChange={(e) => {
+                            setNewSliderUrl(e.target.value);
+                            if (e.target.value) setNewSliderFile(null); // Clear file if URL is typed
+                          }}
+                          className="w-full bg-white border border-slate-200 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    disabled={(!newSliderUrl.trim() && !newSliderFile) || isUploadingSlider}
+                    onClick={async () => {
+                      let finalUrl = newSliderUrl.trim();
+
+                      if (newSliderFile) {
+                        setIsUploadingSlider(true);
+                        try {
+                          const fileExt = newSliderFile.name.split('.').pop();
+                          const fileName = `slider/item-${Date.now()}.${fileExt}`;
+                          const { error: uploadError } = await supabase.storage.from('profiles').upload(fileName, newSliderFile);
+                          
+                          if (uploadError) throw uploadError;
+                          
+                          const { data: { publicUrl } } = supabase.storage.from('profiles').getPublicUrl(fileName);
+                          finalUrl = publicUrl;
+                        } catch (err: any) {
+                          alert("Failed to upload slider file: " + err.message);
+                          setIsUploadingSlider(false);
+                          return;
+                        }
+                      }
+
+                      if (!finalUrl) return;
+
+                      setSliderItems(prev => [
+                        ...prev,
+                        { type: newSliderType, url: finalUrl, title: newSliderTitle.trim() || undefined }
+                      ]);
+                      setNewSliderUrl("");
+                      setNewSliderTitle("");
+                      setNewSliderFile(null);
+                      setIsUploadingSlider(false);
+                    }}
+                    className="w-full bg-blue-600 text-white py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:bg-blue-700 transition disabled:opacity-40"
+                  >
+                    {isUploadingSlider ? "Uploading..." : "+ Add to Slider"}
+                  </button>
+                </div>
+
+                {/* Existing slider items list */}
+                {sliderItems.length > 0 ? (
+                  <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1 custom-scrollbar">
+                    {sliderItems.map((item, idx) => (
+                      <div key={idx} className="flex items-start gap-3 bg-white p-3 rounded-2xl border border-slate-100 group">
+                        {/* Thumbnail preview */}
+                        <div className="w-14 h-10 rounded-lg overflow-hidden border border-slate-100 bg-slate-100 shrink-0">
+                          {item.type === "image" ? (
+                            <img src={item.url} alt="" className="w-full h-full object-cover" loading="lazy" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-slate-400 text-[18px]">🎬</div>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <span className={`text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded ${
+                            item.type === "image" ? "bg-blue-50 text-blue-600" : "bg-purple-50 text-purple-600"
+                          }`}>{item.type}</span>
+                          {item.title && <p className="text-xs font-bold text-slate-700 mt-0.5 truncate">{item.title}</p>}
+                          <p className="text-[9px] text-slate-400 truncate mt-0.5">{item.url}</p>
+                        </div>
+                        <div className="flex flex-col gap-1 shrink-0">
+                          <button
+                            onClick={() => moveSliderItem(idx, 'up')}
+                            disabled={idx === 0}
+                            className="p-1 text-slate-300 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors disabled:opacity-0"
+                            title="Move Up"
+                          >
+                            <ChevronUp className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            onClick={() => moveSliderItem(idx, 'down')}
+                            disabled={idx === sliderItems.length - 1}
+                            className="p-1 text-slate-300 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors disabled:opacity-0"
+                            title="Move Down"
+                          >
+                            <ChevronDown className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                        <button
+                          onClick={() => setSliderItems(prev => prev.filter((_, i) => i !== idx))}
+                          className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors shrink-0"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-center text-xs text-slate-400 py-4">No slider items yet. Add your first one above.</p>
+                )}
+              </div>
+
+              <button
                 disabled={isSavingSettings}
                 onClick={async () => {
                   setIsSavingSettings(true);
@@ -1950,7 +2150,8 @@ export default function AdminDashboard() {
                         header_ad_url: platformSettings.headerAdUrl,
                         header_ad_caption: platformSettings.headerAdCaption,
                         footer_ad_url: platformSettings.footerAdUrl,
-                        footer_ad_caption: platformSettings.footerAdCaption
+                        footer_ad_caption: platformSettings.footerAdCaption,
+                        slider_items: sliderItems
                       })
                     });
 

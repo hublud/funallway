@@ -168,7 +168,7 @@ function DashboardContent() {
     
     try {
       let finalProfileImageUrl = existingProfileImage;
-      let finalGalleryImageUrls = [...existingGalleryImages];
+      const finalGalleryImageUrls = [...existingGalleryImages];
 
       // Upload new cover photo if any
       if (coverPhoto) {
