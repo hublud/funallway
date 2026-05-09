@@ -647,16 +647,15 @@ function DashboardContent() {
                     {existingProfileImage && !coverPhoto && (
                       <div className="mt-4">
                         <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Current Profile Image</p>
-                        <div className="relative group aspect-[16/9] w-full rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+                        <div className="relative aspect-[16/9] w-full rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
                           <img src={existingProfileImage} alt="Current Cover" className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <button 
-                              onClick={() => setExistingProfileImage(null)} 
-                              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-xl transform scale-90 group-hover:scale-100 transition-all"
-                            >
-                              <X className="w-4 h-4" /> Remove Image
-                            </button>
-                          </div>
+                          <button 
+                            onClick={() => setExistingProfileImage(null)} 
+                            className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-xl transition-all active:scale-90"
+                            title="Remove Profile Image"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
                         </div>
                       </div>
                     )}
@@ -684,14 +683,14 @@ function DashboardContent() {
                       <div className="mb-4">
                         <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 gap-4">
                           {existingGalleryImages.map((url, idx) => (
-                            <div key={`existing-${idx}`} className="relative group aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+                            <div key={`existing-${idx}`} className="relative aspect-square rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
                               <img src={url} alt={`Gallery ${idx}`} className="w-full h-full object-cover" />
                               <button 
                                 onClick={() => setExistingGalleryImages(prev => prev.filter((_, i) => i !== idx))} 
-                                className="absolute top-2 right-2 bg-red-500 rounded-full p-1.5 text-white opacity-0 group-hover:opacity-100 transition-opacity shadow-sm hover:bg-red-600"
+                                className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1.5 shadow-lg hover:bg-red-700 transition-all active:scale-90"
                                 title="Remove photo"
                               >
-                                <X className="w-3.5 h-3.5" />
+                                <X className="w-4 h-4" />
                               </button>
                             </div>
                           ))}
