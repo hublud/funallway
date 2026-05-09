@@ -172,24 +172,24 @@ function DashboardContent() {
 
       // Upload new cover photo if any
       if (coverPhoto) {
+        if (coverPhoto.size > 2 * 1024 * 1024) throw new Error(`Profile image "${coverPhoto.name}" is too large. Max size is 2MB.`);
         const ext = coverPhoto.name.split('.').pop() || 'jpg';
         const path = `${userId}/cover-${Date.now()}.${ext}`;
         const { error: upErr } = await supabase.storage.from('profiles').upload(path, coverPhoto);
-        if (!upErr) {
-           finalProfileImageUrl = supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl;
-        }
+        if (upErr) throw new Error(`Profile upload failed: ${upErr.message}`);
+        finalProfileImageUrl = supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl;
       }
 
       // Upload new gallery photos if any
       if (galleryPhotos.length > 0) {
         for (let i = 0; i < galleryPhotos.length; i++) {
           const file = galleryPhotos[i];
+          if (file.size > 2 * 1024 * 1024) throw new Error(`Gallery image "${file.name}" is too large. Max size is 2MB.`);
           const ext = file.name.split('.').pop() || 'jpg';
           const path = `${userId}/gallery-${Date.now()}-${i}.${ext}`;
           const { error: upErr } = await supabase.storage.from('profiles').upload(path, file);
-          if (!upErr) {
-             finalGalleryImageUrls.push(supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl);
-          }
+          if (upErr) throw new Error(`Gallery upload failed (${file.name}): ${upErr.message}`);
+          finalGalleryImageUrls.push(supabase.storage.from('profiles').getPublicUrl(path).data.publicUrl);
         }
       }
 
@@ -609,7 +609,17 @@ function DashboardContent() {
           {/* MEDIA TAB */}
           {activeTab === "media" && (
              <div className="animate-in fade-in duration-300">
-               <h2 className="font-bold text-xl mb-6 text-slate-800 border-b border-slate-100 pb-4">Manage Media (Updated Preview)</h2>
+               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 border-b border-slate-100 pb-4 gap-4">
+                  <h2 className="font-bold text-xl text-slate-800 uppercase tracking-tight">Manage Media</h2>
+                  <button 
+                    onClick={handleSave}
+                    disabled={isSaving}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-widest text-xs px-8 py-3.5 rounded-xl shadow-lg shadow-blue-100 flex items-center justify-center gap-2 transition active:scale-95 disabled:opacity-50"
+                  >
+                    {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                    {isSaving ? "Saving..." : "Save Media Changes"}
+                  </button>
+               </div>
                
                <div className="space-y-8">
                   {/* Privacy Notice */}
@@ -635,9 +645,19 @@ function DashboardContent() {
                     </label>
 
                     {existingProfileImage && !coverPhoto && (
-                      <div className="mt-4 relative group aspect-[16/9] w-full rounded-xl overflow-hidden border border-slate-200">
-                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Current Cover</p>
-                        <img src={existingProfileImage} alt="Current Cover" className="w-full h-full object-cover rounded-xl" />
+                      <div className="mt-4">
+                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Current Profile Image</p>
+                        <div className="relative group aspect-[16/9] w-full rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
+                          <img src={existingProfileImage} alt="Current Cover" className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button 
+                              onClick={() => setExistingProfileImage(null)} 
+                              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-xl transform scale-90 group-hover:scale-100 transition-all"
+                            >
+                              <X className="w-4 h-4" /> Remove Image
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     )}
 
