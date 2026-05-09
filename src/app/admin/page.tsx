@@ -161,7 +161,7 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    // Assist user by extracting links from titles if they contain http and don't have a link yet
+    // Extract links from existing titles if needed on load
     if (sliderItems.length > 0) {
       let changed = false;
       const newItems = sliderItems.map(item => {
@@ -180,7 +180,7 @@ export default function AdminDashboard() {
       });
       if (changed) setSliderItems(newItems);
     }
-  }, [sliderItems.length]);
+  }, [isSettingsOpen]);
 
   const [customLocations, setCustomLocations] = useState<any[]>([]);
   const [newLocName, setNewLocName] = useState("");
@@ -2141,28 +2141,26 @@ export default function AdminDashboard() {
                             <span className="text-[8px] text-slate-300 font-bold truncate max-w-[120px]">{item.url}</span>
                           </div>
                           
-                          <div className="space-y-1">
+                          <div className="space-y-1.5">
                             <input 
                               type="text"
                               value={item.title || ""}
                               onChange={(e) => {
-                                const newItems = [...sliderItems];
-                                newItems[idx].title = e.target.value;
-                                setSliderItems(newItems);
+                                const val = e.target.value;
+                                setSliderItems(prev => prev.map((it, i) => i === idx ? { ...it, title: val } : it));
                               }}
-                              placeholder="Add Title..."
-                              className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                              placeholder="Title"
+                              className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition shadow-sm"
                             />
                             <input 
                               type="text"
                               value={item.link || ""}
                               onChange={(e) => {
-                                const newItems = [...sliderItems];
-                                newItems[idx].link = e.target.value;
-                                setSliderItems(newItems);
+                                const val = e.target.value;
+                                setSliderItems(prev => prev.map((it, i) => i === idx ? { ...it, link: val } : it));
                               }}
-                              placeholder="Add Link URL..."
-                              className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-[10px] text-slate-500 font-medium outline-none focus:ring-2 focus:ring-blue-600 transition"
+                              placeholder="Link (Optional)"
+                              className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-[10px] text-blue-600 font-medium outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition shadow-sm"
                             />
                           </div>
                         </div>
