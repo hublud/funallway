@@ -146,6 +146,7 @@ export default function AdminDashboard() {
   const [newSliderUrl, setNewSliderUrl] = useState("");
   const [newSliderType, setNewSliderType] = useState<"image" | "video">("image");
   const [newSliderTitle, setNewSliderTitle] = useState("");
+  const [newSliderLink, setNewSliderLink] = useState("");
   const [newSliderFile, setNewSliderFile] = useState<File | null>(null);
   const [isUploadingSlider, setIsUploadingSlider] = useState(false);
   const [isSavingSettings, setIsSavingSettings] = useState(false);
@@ -158,6 +159,28 @@ export default function AdminDashboard() {
     [newItems[idx], newItems[targetIdx]] = [newItems[targetIdx], newItems[idx]];
     setSliderItems(newItems);
   };
+
+  useEffect(() => {
+    // Assist user by extracting links from titles if they contain http and don't have a link yet
+    if (sliderItems.length > 0) {
+      let changed = false;
+      const newItems = sliderItems.map(item => {
+        if (!item.link && item.title && (item.title.includes('http://') || item.title.includes('https://'))) {
+          const urlMatch = item.title.match(/https?:\/\/[^\s]+/);
+          if (urlMatch) {
+            changed = true;
+            return {
+              ...item,
+              link: urlMatch[0],
+              title: item.title.replace(urlMatch[0], '').trim()
+            };
+          }
+        }
+        return item;
+      });
+      if (changed) setSliderItems(newItems);
+    }
+  }, [sliderItems.length]);
 
   const [customLocations, setCustomLocations] = useState<any[]>([]);
   const [newLocName, setNewLocName] = useState("");
@@ -2001,6 +2024,14 @@ export default function AdminDashboard() {
                     className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
                   />
 
+                  <input
+                    type="text"
+                    placeholder="Link URL (Optional, e.g. https://...)"
+                    value={newSliderLink}
+                    onChange={(e) => setNewSliderLink(e.target.value)}
+                    className="w-full bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-medium text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                  />
+
                   <div className="space-y-2">
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Add via File or URL</p>
                     <div className="grid grid-cols-1 gap-3">
@@ -2070,10 +2101,16 @@ export default function AdminDashboard() {
 
                       setSliderItems(prev => [
                         ...prev,
-                        { type: newSliderType, url: finalUrl, title: newSliderTitle.trim() || undefined }
+                        { 
+                          type: newSliderType, 
+                          url: finalUrl, 
+                          title: newSliderTitle.trim() || undefined,
+                          link: newSliderLink.trim() || undefined
+                        }
                       ]);
                       setNewSliderUrl("");
                       setNewSliderTitle("");
+                      setNewSliderLink("");
                       setNewSliderFile(null);
                       setIsUploadingSlider(false);
                     }}
@@ -2096,12 +2133,38 @@ export default function AdminDashboard() {
                             <div className="w-full h-full flex items-center justify-center text-slate-400 text-[18px]">🎬</div>
                           )}
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <span className={`text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded ${
-                            item.type === "image" ? "bg-blue-50 text-blue-600" : "bg-purple-50 text-purple-600"
-                          }`}>{item.type}</span>
-                          {item.title && <p className="text-xs font-bold text-slate-700 mt-0.5 truncate">{item.title}</p>}
-                          <p className="text-[9px] text-slate-400 truncate mt-0.5">{item.url}</p>
+                        <div className="flex-1 min-w-0 space-y-2">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded ${
+                              item.type === "image" ? "bg-blue-50 text-blue-600" : "bg-purple-50 text-purple-600"
+                            }`}>{item.type}</span>
+                            <span className="text-[8px] text-slate-300 font-bold truncate max-w-[120px]">{item.url}</span>
+                          </div>
+                          
+                          <div className="space-y-1">
+                            <input 
+                              type="text"
+                              value={item.title || ""}
+                              onChange={(e) => {
+                                const newItems = [...sliderItems];
+                                newItems[idx].title = e.target.value;
+                                setSliderItems(newItems);
+                              }}
+                              placeholder="Add Title..."
+                              className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-700 outline-none focus:ring-2 focus:ring-blue-600 transition"
+                            />
+                            <input 
+                              type="text"
+                              value={item.link || ""}
+                              onChange={(e) => {
+                                const newItems = [...sliderItems];
+                                newItems[idx].link = e.target.value;
+                                setSliderItems(newItems);
+                              }}
+                              placeholder="Add Link URL..."
+                              className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 text-[10px] text-slate-500 font-medium outline-none focus:ring-2 focus:ring-blue-600 transition"
+                            />
+                          </div>
                         </div>
                         <div className="flex flex-col gap-1 shrink-0">
                           <button

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Volume2, VolumeX, Play, Pause } from "lucide-react";
+import { ChevronLeft, ChevronRight, Volume2, VolumeX, Play, Pause, ExternalLink } from "lucide-react";
 import { SliderItem } from "@/utils/pricing";
 
 interface AdvertSliderProps {
@@ -97,36 +97,61 @@ export default function AdvertSlider({ items }: AdvertSliderProps) {
                 idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
               }`}
             >
-              {item.type === "video" ? (
-                <video
-                  ref={idx === current ? videoRef : undefined}
-                  src={item.url}
-                  className="w-full h-full object-contain"
-                  autoPlay
-                  loop
-                  muted={isMuted}
-                  playsInline
-                />
-              ) : (
-                <img
-                  src={item.url}
-                  alt={item.title || `Advertisement ${idx + 1}`}
-                  className="w-full h-full object-contain"
-                  loading={idx === 0 ? "eager" : "lazy"}
-                />
-              )}
+              <div className="relative w-full h-full">
+                {item.type === "video" ? (
+                  <video
+                    ref={idx === current ? videoRef : undefined}
+                    src={item.url}
+                    className="w-full h-full object-contain"
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                  />
+                ) : (
+                  <img
+                    src={item.url}
+                    alt={item.title || `Advertisement ${idx + 1}`}
+                    className="w-full h-full object-contain"
+                    loading={idx === 0 ? "eager" : "lazy"}
+                  />
+                )}
 
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                {/* Link layer - clickable area */}
+                {item.link && (
+                  <a 
+                    href={item.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="absolute inset-0 z-20 cursor-pointer"
+                    title={item.title || "Learn More"}
+                  />
+                )}
 
-              {/* Title label */}
-              {item.title && (
-                <div className="absolute bottom-4 left-4 z-20">
-                  <span className="px-3 py-1.5 bg-black/50 backdrop-blur-sm text-white text-xs font-bold rounded-xl border border-white/10">
-                    {item.title}
-                  </span>
-                </div>
-              )}
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+                {/* Title label */}
+                {item.title && (
+                  <div className="absolute bottom-4 left-4 z-30 pointer-events-none">
+                    <span className="px-3 py-1.5 bg-black/50 backdrop-blur-sm text-white text-[10px] font-black uppercase tracking-widest rounded-xl border border-white/10">
+                      {item.title}
+                    </span>
+                  </div>
+                )}
+
+                {/* Action Button */}
+                {item.link && (
+                  <a 
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute bottom-4 right-4 z-40 bg-white text-black text-[9px] font-black uppercase tracking-[0.2em] px-4 py-2.5 rounded-full shadow-2xl hover:bg-blue-600 hover:text-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2"
+                  >
+                    LEARN MORE <ExternalLink className="w-3 h-3" />
+                  </a>
+                )}
+              </div>
             </div>
           ))}
         </div>

@@ -4,6 +4,7 @@ export interface SliderItem {
   type: "image" | "video";
   url: string;
   title?: string;
+  link?: string;
 }
 
 export interface PlatformSettings {
